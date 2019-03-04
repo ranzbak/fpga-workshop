@@ -17,6 +17,6 @@
 module led(output led_r);
 
   // Permanent assignments
-	assign led_r = 0'b1;
+	assign led_r = 1'b0;
 
 endmodule

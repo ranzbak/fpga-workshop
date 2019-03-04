@@ -13,26 +13,33 @@
 *                                                                             *
 ******************************************************************************/
 
-module blink(input clk, input rst, output led_r, output led_g, output led_b);
+module led(input clk, input rst, output led_r, output led_g, output led_b);
 
-	reg signed [25:0] count;
+	reg led_g_var;
+  reg led_r_reg;
   
   // Permanent assignments
-	assign led_r = count[25];
-  assign led_g = count[24];
-  assign led_b = count[23];
+  assign led_b = 1'b1;
 
   // always at clock pulse
-	always @(posedge clk)
+  always @(posedge clk)
   begin
-    if(rst)
-    begin
-      count <= 0;
-    end
-    else
-    begin
-      count <= count + 1;
-    end
+    // Set RED and GREEN to on (low is on)  
+    led_r_reg <= 1'b0;
+    led_g_var =  1'b0;
+ 
+    // Copy the register and the variable to the output wires 
+    led_r <= led_r_reg; 
+    led_g <= led_g_var;
+  
+    // Set RED and GREEN to off (higt is off)
+    led_r_reg <= 1'b1;
+    led_g_var = 1'b1;
+
+    // After programming for the first time uncomment the two lines below
+    //led_r <= led_r_reg; 
+    //led_g <= led_g_var;
+  
   end
 
 endmodule

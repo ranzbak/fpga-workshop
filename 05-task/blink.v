@@ -16,12 +16,17 @@
 module blink(input clk, input rst, output led_r, output led_g, output led_b);
 
 	reg [25:0] count;
-  
-  // Permanent assignments
-	assign led_r = count[25] || count[10] || count[9] || count[8];
-  assign led_g = count[24] || count[10] || count[9] || count[8];
-  assign led_b = count[23] || count[10] || count[9] || count[8];
 
+  // Dim the LED
+  task dim;
+    input led_in; 
+    output led_out;
+    begin 
+      // Count can be used from the module context
+      led_out = led_in || count[15] || count[14] || count[13] || count[12];
+    end
+  endtask
+  
   // always at clock pulse
 	always @(posedge clk)
   begin
@@ -33,6 +38,12 @@ module blink(input clk, input rst, output led_r, output led_g, output led_b);
     begin
       count <= count + 1;
     end
+
+    // Run the tasks to set the LED's
+    dim(count[25], led_r);
+    dim(count[24], led_g);
+    dim(count[23], led_b);
   end
 
 endmodule
+

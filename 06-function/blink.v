@@ -15,19 +15,29 @@
 
 module blink(input clk, input rst, output led_r, output led_g, output led_b);
 
-	reg signed [25:0] count;
+	reg [25:0] count;
+
+  // Dim the LED
+  function dim;
+    input led_in; 
+
+    begin 
+      // Count can be used from the module context
+      dim = led_in || count[15] || count[14] || count[13] || count[12];
+    end
+  endfunction
   
   // Permanent assignments
-	assign led_r = count[25];
-  assign led_g = count[24];
-  assign led_b = count[23];
+  assign led_r = dim(count[25]);
+  assign led_g = dim(count[24]);
+  assign led_b = dim(count[23]);
 
   // always at clock pulse
 	always @(posedge clk)
   begin
     if(rst)
     begin
-      count <= 0;
+      count = 0;
     end
     else
     begin
