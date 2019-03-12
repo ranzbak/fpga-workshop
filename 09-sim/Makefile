@@ -36,8 +36,8 @@ all: $(PROJ).rpt $(PROJ).bin
 
 sim: $(SIMPROJ)_tb.vcd
 
-gtkwave: $(SIMPROJ)_tb.vcd
-	gtkwave $<
+gtkwave: $(SIMPROJ)_tb.vcd default.gtkw
+	gtkwave $^
 
 prog: $(PROJ).bin
 	iceprog $<
