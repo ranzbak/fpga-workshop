@@ -1,6 +1,7 @@
 # Functions
 
 This example shows how functions work in verilog.
+
 Functions can have any number of inputs but only one output (one return value).
 
 ## Requirements
