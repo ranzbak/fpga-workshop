@@ -10,10 +10,10 @@ TODO
 * [02 Blink](02-blink)
 * [03 Registers and variables](03-varreg)
 * [04 Dimming](04-dim)
-* [05 Tasks](05-task) 
+* [05 Tasks](05-task)
 * [06 Functions](06-function)
 * [07 Case statement](07-case)
-* [08 I/O](08-io)
+* [08 I/O pins in verilog](08-io)
 * [09 Simulation](09-sim)
 
 ## Requisites
@@ -27,7 +27,7 @@ make -j$(nproc)
 sudo make install
 ```
 
-### [Archane-PNR](https://github.com/cseed/arachne-pnr) 
+### [Archane-PNR](https://github.com/cseed/arachne-pnr)
 
 ```
 git clone https://github.com/cseed/arachne-pnr.git arachne-pnr
@@ -84,4 +84,5 @@ sudo make install
 
 ## Further reading
 
-[UPDuino v.2.0 schematic](/docs/UPDuino_v2_0_C_121217.pdf) [Lattice iCE40 UltraPlus datasheet](/docs/ice40ultraplusfamilydatasheet.pdf) 
+* [UPDuino v.2.0 schematic](/docs/UPDuino_v2_0_C_121217.pdf)
+* [Lattice iCE40 UltraPlus datasheet](/docs/ice40ultraplusfamilydatasheet.pdf)
