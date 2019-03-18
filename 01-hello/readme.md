@@ -1,8 +1,9 @@
+Based on [tomverbeure/upduino](https://github.com/tomverbeure/upduino/tree/master/blink)
 
-# Blink
+# Hello
 
-This 'Hello World' equivalent simply blinks the RGB LED. They're high intensity LEDs that will almost
-burn your eyeballs if you stare at it long enough.
+This 'Hello World' equivalent simply lights one of the RGB LEDs internal LEDs.]
+They're high intensity LEDs that will almost burn your eyeballs if you stare at it long enough.
 
 # Requirements
 

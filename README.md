@@ -4,6 +4,18 @@ Introduction
 
 TODO
 
+## Sections
+
+* [01 Hello](01-hello)
+* [02 Blink](02-blink)
+* [03 Registers and variables](03-varreg)
+* [04 Dimming](04-dim)
+* [05 Tasks](05-task) 
+* [06 Functions](06-function)
+* [07 Case statement](07-case)
+* [08 I/O](08-io)
+* [09 Simulation](09-sim)
+
 ## Requisites
 
 ### [IceStorm](http://www.clifford.at/icestorm/)
@@ -64,7 +76,7 @@ sudo make install
 
 ```
 svn checkout svn://svn.code.sf.net/p/gtkwave/code/ gtkwave-code
-cd gtkwave-code/gtkwave3
+cd gtkwave-code/gtkwave3-gtk3
 ./configure
 make -j$(nproc)
 sudo make install
