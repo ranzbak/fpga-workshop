@@ -1,8 +1,7 @@
 # FPGA Workshop
 
-Introduction
-
-TODO
+Basic FPGA development 
+for absolute beginners
 
 ## Sections
 
