@@ -14,7 +14,15 @@
 ******************************************************************************/
 
 module blink(input clk, input rst, output led_r, output led_g, output led_b);
+  // Cycle bits
+  parameter r_bit=25;
+  parameter g_bit=24;
+  parameter b_bit=23;
 
+  // Dim bit
+  parameter  d_bit=16;
+
+  // Count register
 	reg [25:0] count;
 
   // Dim the LED
@@ -23,14 +31,18 @@ module blink(input clk, input rst, output led_r, output led_g, output led_b);
 
     begin 
       // Count can be used from the module context
-      dim = led_in || count[15] || count[14] || count[13] || count[12];
+      dim = led_in ||
+            count[d_bit] || 
+            count[d_bit-1] || 
+            count[d_bit-2] || 
+            count[d_bit-3];
     end
   endfunction
   
   // Permanent assignments
-  assign led_r = dim(count[25]);
-  assign led_g = dim(count[24]);
-  assign led_b = dim(count[23]);
+  assign led_r = dim(count[r_bit]);
+  assign led_g = dim(count[g_bit]);
+  assign led_b = dim(count[b_bit]);
 
   // always at clock pulse
 	always @(posedge clk)

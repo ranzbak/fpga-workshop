@@ -14,6 +14,18 @@
 ******************************************************************************/
 
 module blink(input clk, input rst, output led_r, output led_g, output led_b);
+  // Cycle bits
+  parameter r_bit=25;
+  parameter g_bit=24;
+  parameter b_bit=23;
+
+  // Dim bits bit 16 around 800Hz)
+  parameter d_bit=16;
+
+  // output registers
+  reg out_led_r;
+  reg out_led_g;
+  reg out_led_b;
 
 	reg [25:0] count;
 
@@ -23,7 +35,11 @@ module blink(input clk, input rst, output led_r, output led_g, output led_b);
     output led_out;
     begin 
       // Count can be used from the module context
-      led_out = led_in || count[15] || count[14] || count[13] || count[12];
+      led_out = led_in || 
+                  count[d_bit] || 
+                  count[d_bit-1] || 
+                  count[d_bit-2] || 
+                  count[d_bit-3];
     end
   endtask
   
@@ -40,10 +56,14 @@ module blink(input clk, input rst, output led_r, output led_g, output led_b);
     end
 
     // Run the tasks to set the LED's
-    dim(count[25], led_r);
-    dim(count[24], led_g);
-    dim(count[23], led_b);
+    dim(count[r_bit], out_led_r);
+    dim(count[g_bit], out_led_g);
+    dim(count[b_bit], out_led_b);
   end
 
+  // Assign output register to output wires
+  assign led_r = out_led_r;
+  assign led_g = out_led_g;
+  assign led_b = out_led_b;
 endmodule
 
