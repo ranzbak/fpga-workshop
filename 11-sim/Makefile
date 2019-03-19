@@ -39,12 +39,8 @@ sim: $(SIMPROJ)_tb.vcd
 gtkwave: $(SIMPROJ)_tb.vcd default.gtkw
 	gtkwave $^
 
-prog: $(PROJ).bin
+flash: $(PROJ).bin
 	iceprog $<
-
-sudo-prog: $(PROJ).bin
-	@echo 'Executing prog as root!!!'
-	sudo iceprog $<
 
 clean:
 	# Remove the synthesis files
@@ -54,4 +50,4 @@ clean:
 	rm -f $(SIMPROJ)_syntb $(SIMPROJ)_syntb.vcd $(SIMPROJ)_tb.vcd $(SIMPROJ)_tb
 
 .SECONDARY:
-.PHONY: all prog clean sim postsim
+.PHONY: all flash clean sim

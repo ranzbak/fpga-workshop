@@ -7,13 +7,19 @@ module chip (
 
 	wire clk, led_r, led_g, led_b;
 
-	SB_HFOSC u_hfosc (
-        	.CLKHFPU(1'b1),
-        	.CLKHFEN(1'b1),
-        	.CLKHF(clk)
- 	);
+  SB_HFOSC #(
+    .CLKHF_DIV("0b00")
+    ) u_hfosc (
+      .CLKHFPU(1'b1),
+      .CLKHFEN(1'b1),
+      .CLKHF(clk)
+    );
 
-	blink my_blink (
+	blink #(
+    .r_bit(25),
+    .g_bit(24),
+    .b_bit(23)
+    ) my_blink (
 		.clk(clk),
 		.rst(0),
     		.led_r(led_r),
