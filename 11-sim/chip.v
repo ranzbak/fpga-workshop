@@ -8,11 +8,15 @@ module chip (
 
 	wire clk, led_r, led_g, led_b, reset;
 
-	SB_HFOSC u_hfosc (
-        	.CLKHFPU(1'b1),
-        	.CLKHFEN(1'b1),
-        	.CLKHF(clk)
-    	);
+
+  // Clock devided to 24 MHz
+  SB_HFOSC #(
+    .CLKHF_DIV("0b01")
+    ) u_hfosc (
+      .CLKHFPU(1'b1),
+      .CLKHFEN(1'b1),
+      .CLKHF(clk)
+    );
 
   // RED
 	top red_top (
