@@ -6,7 +6,9 @@ for absolute beginners
 ## Sections
 
 * [01 Hello](01-hello)
+* [02 Hello](02-hello)
 * [02 Blink](02-blink)
+* [03 Blink](03-blink)
 * [03 Registers and variables](03-varreg)
 * [04 Dimming](04-dim)
 * [05 Tasks](05-task)
