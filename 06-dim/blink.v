@@ -14,13 +14,23 @@
 ******************************************************************************/
 
 module blink(input clk, input rst, output led_r, output led_g, output led_b);
+  // Cycle bits
+  parameter r_bit=25;
+  parameter g_bit=24;
+  parameter b_bit=23;
+
+  // Dim bits bit 16 around 800Hz)
+  parameter d_bit=16;
 
 	reg [25:0] count;
   
   // Permanent assignments
-	assign led_r = count[25] || count[15] || count[14] || count[13] || count[12];
-  assign led_g = count[24] || count[15] || count[14] || count[13] || count[12];
-  assign led_b = count[23] || count[15] || count[14] || count[13] || count[12];
+  // RED LED by default pick bit 25 (0.7 seconds)
+	assign led_r = count[r_bit] || count[d_bit] || count[d_bit-1] || count[d_bit-2] || count[d_bit-3];
+  // GREEN LED by default pick bit 24 (0.35 seconds)
+  assign led_g = count[g_bit] || count[d_bit] || count[d_bit-1] || count[d_bit-2] || count[d_bit-3];
+  // BLUE LED by default pick bit 23 (0.13 secounds)
+  assign led_b = count[b_bit] || count[d_bit] || count[d_bit-1] || count[d_bit-2] || count[d_bit-3];
 
   // always at clock pulse
 	always @(posedge clk)

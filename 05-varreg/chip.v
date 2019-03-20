@@ -7,6 +7,7 @@ module chip (
 
 	wire clk, led_r, led_g, led_b;
 
+  // Internal oscillator
 	SB_HFOSC u_hfosc (
         	.CLKHFPU(1'b1),
         	.CLKHFEN(1'b1),
