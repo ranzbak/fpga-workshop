@@ -1,0 +1,63 @@
+[*]
+[*] GTKWave Analyzer v3.3.86 (w)1999-2017 BSI
+[*] Fri Mar 22 20:47:01 2019
+[*]
+[dumpfile] "/home/paul/work/fpga/icestorm/fpga_workshop/12-onewire/simulate_tb.vcd"
+[dumpfile_mtime] "Fri Mar 22 20:39:17 2019"
+[dumpfile_size] 6453857
+[savefile] "/home/paul/work/fpga/icestorm/fpga_workshop/12-onewire/default.gtkw"
+[timestart] 0
+[size] 1239 633
+[pos] 2207 -129
+*-7.000000 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] testbench.
+[treeopen] testbench.uut.
+[treeopen] testbench.uut.my_temp.
+[sst_width] 202
+[signals_width] 223
+[sst_expanded] 1
+[sst_vpaned_height] 159
+@28
+testbench.uut.my_temp.clk
+testbench.uut.my_temp.rst
+@24
+[color] 2
+testbench.uut.my_temp.cur_state[7:0]
+@800200
+-onewire bus
+@24
+testbench.uut.my_temp.bus_adr
+@22
+testbench.uut.my_temp.bus_wdt[31:0]
+@28
+testbench.uut.my_temp.bus_wen
+@22
+testbench.uut.my_temp.bus_rdt[31:0]
+@28
+testbench.uut.my_temp.bus_ren
+@1000200
+-onewire bus
+@28
+testbench.uut.my_temp.status_reg[7:0]
+@800200
+-LEDS
+@28
+[color] 1
+testbench.uut.my_temp.led_r
+[color] 4
+testbench.uut.my_temp.led_g
+[color] 5
+testbench.uut.my_temp.led_b
+@1000200
+-LEDS
+@800200
+-one wire output
+@29
+testbench.uut.my_temp.my_onewire.owr_i
+@28
+testbench.uut.my_temp.my_onewire.owr_e
+testbench.uut.my_temp.my_onewire.owr_p
+@1000200
+-one wire output
+[pattern_trace] 1
+[pattern_trace] 0
