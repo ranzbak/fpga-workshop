@@ -12,7 +12,10 @@ module sim_top (
 	wire clk, led_r, led_g, led_b, one_wire, owr_in, owr_out;
 
   // temperature sensor
-	temp my_temp (
+	temp #(
+    .CDR_N(4),
+    .CRD_O(0)
+    ) my_temp (
 		.clk(clk),
 		.rst(rst),
     .led_r(led_r),
@@ -21,8 +24,8 @@ module sim_top (
     .owr_in(owr_in),
     .owr_out(owr_out)
 	);
-  defparam my_temp.CDR_N = 4; // small devider for simulation
-  defparam my_temp.CDR_O = 0;  
+  //defparam my_temp.CDR_N = 1; // small devider for simulation
+  //defparam my_temp.CDR_O = 0;  
 
 
   // Handle the inout

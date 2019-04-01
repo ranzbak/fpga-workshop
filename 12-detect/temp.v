@@ -1,8 +1,8 @@
 
 module temp #(
     parameter BWD = 32,           // Bus width of the data register
-    parameter CDR_N = 48 * 5 - 1, // Normal mode cycle devider
-    parameter CDR_O = 48 * 1 - 1  // Overdrive mode cycle devider
+    parameter CDR_N = 48 * 6 - 1, // Normal mode cycle divider
+    parameter CDR_O = 48 * 1 - 1  // Overdrive mode cycle divider
   ) (
     input  clk,
     input  rst,
@@ -28,6 +28,8 @@ module temp #(
   // One wire state register
   wire [7:0] status_reg;
   reg  [7:0] status_reg_prev;
+
+  reg [14:0] idle_time = 'd20000;
 
   // LED regs
   reg led_r_reg;
@@ -55,7 +57,12 @@ module temp #(
   * read/write enable, put data on bus, and trigger the enable one cycle
   *
   */
-  sockit_owm my_onewire (
+  sockit_owm #(
+    .CDR_N(CDR_N),
+    .CDR_O(CDR_O),
+    .CDR_E(1),
+    .OVD_E(0)
+    ) my_onewire (
 		.clk(clk),
 		.rst(rst),
     .bus_ren(bus_ren),
@@ -68,22 +75,25 @@ module temp #(
     .owr_e(owr_out),
     .owr_i(owr_in)
 	);
-  // Setup module clk devider for 48 MHz 
-  defparam my_onewire.CDR_N = 48 * 5 - 1;        // CDR_N = f_CLK * BTP_N - 1
-  defparam my_onewire.CDR_O = 48 * 1 - 1;        // CDR_O = f_CLK * BTP_O - 1
+  // Setup module clock divider for 48 MHz 
+  // defparam my_onewire.CDR_N = CDR_N;  // CDR_N = f_CLK * BTP_N - 1
+  // defparam my_onewire.CDR_O = CDR_O;  // CDR_O = f_CLK * BTP_O - 1
+  // defparam my_onewire.CDR_E = 0;      // Constant clock frequency, no need for a dynamic clock divider
+  // defparam my_onewire.OVD_E = 0;      // Disable overdrive
 
   // Short hands
   assign status_reg = bus_rdt[7:0];
 
   // Statement Enum
   parameter
-    start      = 0,  // Start of the initialization
-    reset      = 1,  // Initiate Reset 
-    w_reset    = 2,  // Wait for reset to finish
-    detect     = 4,  // Send the detect command
-    w_detect   = 5,  // Wait for the detection to finish
-    found      = 6,  // Green of the sensor is present
-    fail       = 99; // triggered when something went wrong
+    start         = 0,  // Start of the initialization
+    reset         = 1,  // Initiate Reset
+    w_reset       = 2,  // Wait for reset to finish
+    detect        = 4,  // Send the detect command
+    w_detect      = 5,  // Wait for the detection to finish
+    detected      = 6,  // Green of the sensor is present
+
+    fail          = 99; // triggered when something went wrong
 
   // always at clock pulse
 	always @(posedge clk)
@@ -106,18 +116,27 @@ module temp #(
       cur_state <= reset;
     end
 
-    // Statemachine to handle chip interaction
+    // State machine to handle chip interaction
     case (cur_state)
+
+      // Start status Initializations can be done here
       start : begin
         // Wait for reset to clear
         if(rst == 0) 
           cur_state <= reset;
       end
+
+      // Wait until the rst goes low
       reset : begin
-        // Wait until the reset goes low
         if ( rst == 1'b0 )
           cur_state <= detect;
       end
+
+      /*
+       * ===============================
+       * Initiate the detection sequence
+       * ===============================
+       */
       detect : begin
         // Setup the registers to start a reset and detect cycle
         bus_ren <= 1'b0;   // Read enable
@@ -128,6 +147,12 @@ module temp #(
         // After one cycle wait for the detect
         cur_state <= w_detect;
       end
+
+      /*
+       * ===============================
+       * Wait for the detection result
+       * ===============================
+       */
       w_detect : begin
         bus_ren <= 1'b1;   // Read enable
         bus_adr <= 1'b0;   // Address bus implicit for clarity
@@ -135,10 +160,10 @@ module temp #(
         // Wait till the end of the cycle
         if ( status_reg_prev[3] == 1'b1 && status_reg[3] == 1'b0 ) begin
           if ( status_reg[0] == 1'b0 ) begin
-           // no device detected
-           cur_state <= found;
+           // device detected
+           cur_state <= detected;
           end else begin
-           // device found
+           // no device detected
            cur_state <= fail;
           end 
         end
@@ -147,17 +172,42 @@ module temp #(
         led_r_reg <= 1'b1; // Orange
         led_g_reg <= 1'b1;
       end
-      found : begin
+
+      /*
+       * ===============================
+       * We found a device on the one wire
+       * ===============================
+       */
+      detected : begin
         // The green LED to indicate success
         led_g_reg <= 1'b0;
+
+        // Wait and detect again
+        idle_time <= idle_time - 1;
+        if ( idle_time == 0 ) begin
+          idle_time <= 'd20000;
+          cur_state <= start;
+        end
       end
+
+      /*
+       * ===============================
+       * Something failed, constant red light
+       * ===============================
+       */
       fail : begin
         // The RED LED to indicate failure
         led_r_reg <= 1'b0;
+
+        // Wait before trying again
+        idle_time <= idle_time - 1;
+        if ( idle_time == 0 ) begin
+          idle_time <= 'd20000;
+          cur_state <= start;
+        end
       end
       default : begin
-        // Illegal state go to fail
-        //cur_state <= fail;
+        // Illegal state, should *NOT* happen
         led_r_reg <= 1'b0;
         led_g_reg <= 1'b0;
         led_b_reg <= 1'b0;

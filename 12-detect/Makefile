@@ -2,7 +2,6 @@ PROJ = chip
 SIMPROJ = simulate
 GTKWAVE_CFG = default.gtkw
 
-
 PIN_DEF = upduino_v2.pcf
 DEVICE = 5k
 TIME_DEVICE = up5k
@@ -52,9 +51,9 @@ flash: $(PROJ).bin
 clean:
 	# Remove the synthesis files
 	rm -f $(SIMPROJ).blif $(SIMPROJ).asc $(SIMPROJ).rpt $(SIMPROJ).bin 
-	rm -f $(PROJ).blif $(PROJ).asc $(PROJ).rpt $(PROJ).bin 
+	rm -f $(PROJ).blif $(PROJ).asc $(PROJ).rpt $(PROJ).bin $(PROJ).txt
 	# Removing the simulation files
 	rm -f $(SIMPROJ)_syntb $(SIMPROJ)_syntb.vcd $(SIMPROJ)_tb.vcd $(SIMPROJ)_tb
 
 .SECONDARY:
-.PHONY: all flash clean sim test
+.PHONY: all flash clean sim test gtkwave
