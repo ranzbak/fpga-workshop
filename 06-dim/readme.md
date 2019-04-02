@@ -1,8 +1,8 @@
-# Functions
+# Dim the bright light
 
-This example shows how functions work in verilog.
-
-Functions can have any number of inputs but only one output (one return value).
+As you have noticed before, the high intensity RGB LEDs will almost certainly burn
+your eyeballs if you stare at it long enough.
+This example fixes that for you :)
 
 ## Requirements
 
@@ -20,4 +20,4 @@ Functions can have any number of inputs but only one output (one return value).
 
     Program the bitstream to the device.
 
-Pretty loosly based on [tomverbeure/upduino](https://github.com/tomverbeure/upduino/tree/master/blink)
+Loosly based on [tomverbeure/upduino](https://github.com/tomverbeure/upduino/tree/master/blink)

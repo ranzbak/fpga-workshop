@@ -1,7 +1,6 @@
-# Tasks
+# Registers and variables
 
-This example shows how to use tasks in verilog.
-Tasks can have any number of inputs and outputs.
+This example shows the difference between variables and registers.
 
 ## Requirements
 
@@ -19,4 +18,4 @@ Tasks can have any number of inputs and outputs.
 
     Program the bitstream to the device.
 
-Pretty loosly based on [tomverbeure/upduino](https://github.com/tomverbeure/upduino/tree/master/blink)
+Loosly based on [tomverbeure/upduino](https://github.com/tomverbeure/upduino/tree/master/blink)

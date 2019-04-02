@@ -9,13 +9,15 @@ for absolute beginners
 * [02 Hello](02-hello)
 * [02 Blink](02-blink)
 * [03 Blink](03-blink)
-* [03 Registers and variables](03-varreg)
-* [04 Dimming](04-dim)
-* [05 Tasks](05-task)
-* [06 Functions](06-function)
-* [07 Case statement](07-case)
-* [08 I/O pins in verilog](08-io)
-* [09 Simulation](09-sim)
+* [04 Parameters](04-parameter)
+* [05 Variables and Registers](05-varreg)
+* [06 Dimming](06-dim)
+* [07 Tasks](07-task)
+* [08 Functions](08-function)
+* [09 Case statement](09-case)
+* [10 I/O pins in verilog](10-io)
+* [11 Simulation](11-sim)
+* [12 Detect](12-detect)
 
 ## Requisites
 
@@ -85,5 +87,6 @@ sudo make install
 
 ## Further reading
 
-* [UPDuino v.2.0 schematic](/docs/UPDuino_v2_0_C_121217.pdf)
-* [Lattice iCE40 UltraPlus datasheet](/docs/ice40ultraplusfamilydatasheet.pdf)
+* [UPDuino v.2.0 schematic](docs/UPDuino_v2_0_C_121217.pdf)
+* [Lattice iCE40 UltraPlus datasheet](docs/ice40ultraplusfamilydatasheet.pdf)
+* [SocKit 1-wire master](docs/sockit_onewire.pdf)

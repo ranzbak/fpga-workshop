@@ -1,8 +1,8 @@
-# Blink
+# Hello
 
-This 'Hello World' equivalent simply blinks the RGB LED.
-They're high intensity LEDs that will almost certainly
-burn your eyeballs if you stare at it long enough.
+This 'Hello World' equivalent simply lights one of the RGB LEDs internal LEDs.
+They're high intensity LEDs that will almost certainly burn your eyeballs
+when you stare at it long enough.
 
 ## Requirements
 

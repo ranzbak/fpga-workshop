@@ -1,8 +1,6 @@
-# Dim the bright light
+# Parameters
 
-As you have noticed before, the high intensity RGB LEDs will almost certainly burn
-your eyeballs if you stare at it long enough.
-This example fixes that for you :)
+This example shows how parameters work and make for reusable modules.
 
 ## Requirements
 
