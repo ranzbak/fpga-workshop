@@ -1,0 +1,6 @@
+set_io O_LED_R	41
+set_io O_LED_G	39
+set_io O_LED_B	40
+
+set_io I_RESET_WIRE 42
+set_io IO_ONE_WIRE 43
