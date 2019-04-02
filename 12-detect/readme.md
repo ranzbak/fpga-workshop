@@ -1,4 +1,3 @@
-
 # Detect
 
 This example detects a DS18B20 one wire sensor connected to port 43.

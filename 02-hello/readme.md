@@ -1,16 +1,16 @@
+# Hello
 
-# Blink
+This 'Hello World' equivalent simply lights one of the RGB LEDs internal LEDs.
+They're high intensity LEDs that will almost certainly burn your eyeballs
+when you stare at it long enough.
 
-This 'Hello World' equivalent simply blinks the RGB LED. They're high intensity LEDs that will almost
-burn your eyeballs if you stare at it long enough.
-
-# Requirements
+## Requirements
 
 * Yosys
 * Arachne-pnr
 * Project IceStorm
 
-# Usage
+## Usage
 
 * ```make```
 
@@ -23,13 +23,12 @@ burn your eyeballs if you stare at it long enough.
 Expected output during flashing:
 
 ```
-ubuntu@ubuntu-xenial:~/projects/upduino$ sudo make flash
 iceprog chip.bin
 init..
 cdone: high
 reset..
 cdone: high
-flash ID: 0xEF 0x40 0x16 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00
+flash ID: 0xEF 0x40 0x16 0x00
 file size: 104090
 erase 64kB sector at 0x000000..
 erase 64kB sector at 0x010000..
@@ -40,3 +39,4 @@ cdone: high
 Bye.
 ```
 
+Based on [tomverbeure/upduino](https://github.com/tomverbeure/upduino/tree/master/blink)
