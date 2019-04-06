@@ -1,37 +1,41 @@
 [*]
 [*] GTKWave Analyzer v3.3.86 (w)1999-2017 BSI
-[*] Tue Mar 12 18:55:50 2019
+[*] Sat Apr  6 20:24:45 2019
 [*]
-[dumpfile] "/home/paul/work/fpga/icestorm/fpga_workshop/09-sim/simulate_tb.vcd"
-[dumpfile_mtime] "Tue Mar 12 18:55:08 2019"
-[dumpfile_size] 8783780
-[savefile] "/home/paul/work/fpga/icestorm/fpga_workshop/09-sim/test.gtkw"
-[timestart] 0
-[size] 1000 600
-[pos] -1 -1
-*-6.000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[dumpfile] "/home/paul/work/fpga/icestorm/fpga_workshop/11-sim/simulate_tb.vcd"
+[dumpfile_mtime] "Sat Apr  6 20:19:41 2019"
+[dumpfile_size] 8788395
+[savefile] "/home/paul/work/fpga/icestorm/fpga_workshop/11-sim/default.gtkw"
+[timestart] 1816100
+[size] 1557 938
+[pos] -197 -130
+*-15.000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] testbench.
+[treeopen] testbench.uut.
 [sst_width] 202
 [signals_width] 190
 [sst_expanded] 1
-[sst_vpaned_height] 147
+[sst_vpaned_height] 264
 @28
 testbench.uut.clk
+@800200
+-Counters
 @22
-testbench.uut.count_cur[7:0]
-testbench.uut.count_duty[7:0]
-testbench.uut.count_duty_next[7:0]
-testbench.uut.count_speed[10:0]
-@28
-testbench.uut.duty_dir
-testbench.uut.led
-testbench.uut.led_reg
-@22
-testbench.uut.reset_counter[7:0]
-@28
-testbench.uut.resetn
-testbench.uut.rst
+testbench.uut.simulate_cycle.count_cur[7:0]
+testbench.uut.simulate_cycle.count_duty[7:0]
+testbench.uut.simulate_cycle.count_duty_next[7:0]
+testbench.uut.simulate_cycle.count_speed[10:0]
+testbench.uut.simulate_cycle.reset_counter[7:0]
+@1000200
+-Counters
+@29
+[color] 2
+testbench.uut.simulate_cycle.duty_dir
 @22
 testbench.uut.speed[10:0]
+@28
+testbench.uut.led
+testbench.uut.simulate_cycle.resetn
+testbench.uut.rst
 [pattern_trace] 1
 [pattern_trace] 0

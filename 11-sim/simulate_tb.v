@@ -4,10 +4,10 @@ module testbench;
 
   wire ok;
 
-  top uut (
+  simulate uut (
     .clk(clk),
     .led(ok),
-    .speed(2)
+    .speed(11'd2)
   );
 
   reg [4095:0] vcdfile;
@@ -22,15 +22,15 @@ module testbench;
   end
 
   always @(posedge clk) begin
-    if( uut.count_cur > 1023 ) begin
-      $display("%0t: %d", $time, uut.count_cur);
+    if( uut.simulate_cycle.count_cur > 1023 ) begin
+      $display("%0t: %d", $time, uut.simulate_cycle.count_cur);
       $stop;
     end
   end
 
 
   initial begin
-    repeat (200000) @(posedge clk);
+    repeat (400000) @(posedge clk);
     $display("SUCCESS: Simulation run for 200000 cycles/ %0t.", $time);
     $finish;
   end

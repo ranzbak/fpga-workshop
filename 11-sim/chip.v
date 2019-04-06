@@ -19,27 +19,27 @@ module chip (
     );
 
   // RED
-	top red_top (
+	cycle red_cycle (
 		.clk(clk),
 		.rst(reset),
     .speed(1301),
-    		.led(led_r),
+    .led(led_r)
 	);
 
   // GREEN
-	top green_top (
+	cycle green_cycle (
 		.clk(clk),
 		.rst(reset),
     .speed(1607),
-    		.led(led_g),
+    .led(led_g)
 	);
 
   // BLUE
-	top blue_top (
+	cycle blue_cycle (
 		.clk(clk),
 		.rst(reset),
     .speed(1999),
-    		.led(led_b),
+    .led(led_b)
 	);
 
 	assign LED_R = led_r;
