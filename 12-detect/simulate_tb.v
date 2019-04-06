@@ -92,8 +92,8 @@ module testbench;
 
   // End the simulation at 200_000 cycles 
   initial begin
-    repeat (200000) @(posedge clk);
-    $display("SUCCESS: Simulation run for 200000 cycles.");
+    repeat (100000) @(posedge clk);
+    $display("SUCCESS: Simulation run for 100000 cycles.");
     $finish;
   end
 endmodule
