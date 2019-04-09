@@ -18,8 +18,14 @@ for absolute beginners
 * [10 I/O pins in verilog](10-io)
 * [11 Simulation](11-sim)
 * [12 Detect](12-detect)
+* [13 DS18B20 Sensor](13-temp-ds18b20)
 
 ## Requisites
+
+[dimdm IceTools Github](https://github.com/ddm/icetools)
+
+## Requisites for people wanting to do it hardcore
+
 
 ### [IceStorm](http://www.clifford.at/icestorm/)
 
