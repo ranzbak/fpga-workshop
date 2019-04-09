@@ -58,7 +58,6 @@ Expected output during GTKWave run
 
 ```
 $ make gtkwave
-[No write since last change]
 iverilog -o simulate_tb simulate_tb.v simulate.v ds18b20.v read_temp.v sockit_owm.v
 vvp -N simulate_tb +vcd=simulate_tb.vcd
 VCD info: dumpfile simulate_tb.vcd opened for output.
