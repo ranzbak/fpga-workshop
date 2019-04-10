@@ -25,7 +25,7 @@ module sim_top (
     .o_owr(owr_out)
 	);
   //defparam my_temp.CDR_N = 1; // small devider for simulation
-  //defparam my_temp.CDR_O = 0;  
+  //defparam my_temp.CDR_O = 0;
 
 
   // Handle the inout

@@ -1,6 +1,6 @@
 module read_temp #(
     parameter BWD = 32,           // Bus width of the data register
-    parameter CDR_N = 48 * 6 - 1, // Normal mode cycle divider
+    parameter CDR_N = 48 * 7 - 1, // Normal mode cycle divider
     parameter CDR_O = 48 * 1 - 1  // Overdrive mode cycle divider
   ) (
     input  i_clk,     // Basic IO
@@ -21,7 +21,7 @@ module read_temp #(
   reg r_led_g;
   reg r_led_b;
 
-  // DS18B20 
+  // DS18B20
   reg [5:0]   r_command = 'b0;
   reg         r_enable  = 'b0;
 
@@ -57,15 +57,15 @@ module read_temp #(
    * 20 'C = 'h0151
    * Temperature indication
    * T<20'C      Blue
-   * 20'C<T<25'C Green 
+   * 20'C<T<25'C Green
    * T>25'C      Red
    */
-  parameter 
-    p_temp_low     = 'h0191,
-    p_temp_high    = 'h0151;
+  parameter
+    p_temp_high    = 'h0191,
+    p_temp_low     = 'h0151;
 
   // Command enumeration
-  parameter 
+  parameter
     c_idle         = 0,
     c_reset_detect = 1,
     c_skip_rom     = 2,
@@ -75,7 +75,7 @@ module read_temp #(
     c_poll_wait    = 6;
 
   // State enumeration
-  parameter 
+  parameter
     s_start             = 0,
     // First cycle to trigger the conversion
     s_reset_detect      = 1,
@@ -103,7 +103,7 @@ module read_temp #(
   task send_command;
     input [5:0]a_command;
     input [7:0]a_next_state;
-    begin 
+    begin
       // Send command
       r_command <= a_command;
       r_enable <= 1'b1;
@@ -116,22 +116,50 @@ module read_temp #(
   task wait_detect_command;
     input [7:0] a_next_state;
     input [7:0] a_no_detect_state;
+
     // Check the status register when the irq is passed
-    if (w_irq == 1'b1) begin
-      if (w_detect == 1'b1)
-        r_state <= a_next_state;
-      else
-        r_state <= a_no_detect_state;
+    begin
+      if (w_irq == 1'b1) begin
+        if (w_detect == 1'b1)
+          r_state <= a_next_state;
+        else
+          r_state <= a_no_detect_state;
+      end
     end
   endtask
 
   // Task wait for command to complete
   task wait_command;
     input [7:0] a_next_state;
+
     begin
       if (w_irq == 1'b1) begin
         r_state <= a_next_state;
       end
+    end
+  endtask
+
+  // Process the temperature and output results using the RGB LED
+  task proc_temp;
+    input [7:0] a_next_state;
+    input [15:0] a_data;
+
+    begin
+      // By default all LEDS off
+      r_led_r <= 1'b1;
+      r_led_g <= 1'b1;
+      r_led_b <= 1'b1;
+
+      // Enable the correct LED
+      if(a_data > p_temp_high)
+        r_led_r <= 1'b0;
+      else if (a_data < p_temp_low)
+        r_led_b <= 1'b0;
+      else
+        r_led_g <= 1'b0;
+
+      // Measure next value
+      r_state <= a_next_state;
     end
   endtask
 
@@ -141,14 +169,16 @@ module read_temp #(
     // Signals to their default state
     r_enable <= 1'b0;
     r_command <= c_idle;
-    //r_led_r <= 1'b1; // LEDS
-    //r_led_g <= 1'b1;
-    //r_led_b <= 1'b1;
 
     // Handle reset
     if (i_rst == 1'b1) begin
+      // NO LEDS during reset
+      r_led_r <= 1'b1; // LEDS
+      r_led_g <= 1'b1;
+      r_led_b <= 1'b1;
+      // Start over
       r_state <= s_start;
-    end 
+    end
 
     // State machine
     case (r_state)
@@ -161,102 +191,68 @@ module read_temp #(
       end
 
       // Send reset/detect signal
-      s_reset_detect : begin
+      s_reset_detect :
         // Send command
         send_command(c_reset_detect, s_wait_detect);
-      end
 
       // Wait for detection
-      s_wait_detect : begin
+      s_wait_detect :
         wait_detect_command(s_convert, s_error);
-      end
 
       // Send Convert temperature command 44h
-      s_convert : begin
+      s_convert :
         send_command(c_convert_t, s_wait_convert);
-      end
 
       // Wait for the conversion to finish sending
-      s_wait_convert : begin
+      s_wait_convert :
         wait_command(s_poll_convert);
-      end
 
       // Poll for conversion to have finished
-      s_poll_convert : begin
+      s_poll_convert :
         send_command(c_poll_wait, s_poll_wait_convert);
-      end
 
       // Wait for the conversion to finish sending
-      s_poll_wait_convert : begin
+      s_poll_wait_convert :
         wait_command(s_2_reset_detect);
-      end
 
       // Reset the DS18B20 and detect for round 2
-      s_2_reset_detect : begin
-        // Send command
+      s_2_reset_detect :
         send_command(c_reset_detect, s_2_wait_detect);
-      end
 
       // Wait for the detection
-      s_2_wait_detect : begin
+      s_2_wait_detect :
         wait_detect_command(s_2_read_scratch, s_2_read_scratch);
-      end
-      
+
       // Send the read scratch command
-      s_2_read_scratch : begin
+      s_2_read_scratch :
         send_command(c_read_scratch, s_2_wait_scratch);
-      end
 
       // Wait for the read scratch to be finished
-      s_2_wait_scratch : begin
+      s_2_wait_scratch :
         wait_command(s_2_get_temp);
-      end
-      
+
       // Retrieve the 9 bytes to the FPGA
-      s_2_get_temp : begin
+      s_2_get_temp :
         // nothing yet
         send_command(c_output_temp, s_2_wait_temp);
-      end
 
       // Wait for all bytes to arrive
-      s_2_wait_temp : begin
+      s_2_wait_temp :
         wait_command(s_2_proc_temp);
-      end
 
-      /*
-       * Process the temperature, and show leds 
-       * T<20    blue, cold
-       * 20<T<25 green, ok
-       * T>25    red, hot
-       * 25 'C = 'b0191
-       * 20 'C = 'b0151
-       */
-      s_2_proc_temp : begin
-        // By default all LEDS off
-        r_led_r <= 1'b1;
-        r_led_g <= 1'b1;
-        r_led_b <= 1'b1;
+      // Process the temperature, and show leds
+      s_2_proc_temp :
+        proc_temp(s_start, w_data);
 
-        // Enable the correct LED
-        if (w_data < p_temp_low)
-          r_led_b <= 1'b0;
-        else if(w_data > p_temp_high)
-          r_led_r <= 1'b0;
-        else 
-          r_led_g <= 1'b0;
-        
-        // Measure next value
-        r_state <= s_start;  
-      end
-      
-    
       // Error
       s_error : begin
-        // Red LED until reset for now 
+        // Red LED until reset for now
         // TODO: Change this
         r_led_r <= 1'b0;
+        r_led_g <= 1'b0;
+        r_led_b <= 1'b0;
       end
-      
+
       // Handles default
       default : begin
         // Just go to error when non-existing states are set

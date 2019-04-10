@@ -18,7 +18,7 @@
  *       o_owr        : One wire output
  *
  * No new commands can be issued while o_ready or o_busy is high.
- *       
+ *
  * Commands:
  * c_reset_detect     : Resets the DS18B20, and looks for the present signal
  * c_skip_rom         : skips the addressing of the DS18B20, and lets the FPGA
@@ -29,7 +29,7 @@
  */
 module ds18b20 #(
   parameter BWD = 32,           // Bus width of the data register
-  parameter CDR_N = 48 * 6 - 1, // Normal mode cycle divider
+  parameter CDR_N = 48 * 5 - 1, // Normal mode cycle divider
   parameter CDR_O = 48 * 1 - 1  // Overdrive mode cycle divider
 )(
   input i_clk,
@@ -71,9 +71,9 @@ module ds18b20 #(
   reg        r_detect = 0;
 
   // Scratch pad
-  parameter p_scratch_len = 9*8; // Scratch pad is 9 bytes long
+  parameter p_scratch_len = 15; // Scratch pad is 9 bytes long
   reg [$clog2(p_scratch_len)-1:0] r_scratch_count;
-  reg [p_scratch_len:0] r_scratch_buf;  
+  reg [p_scratch_len:0] r_scratch_buf;
 
   // Output temperature register
   reg [15:0] r_data = 0;
@@ -87,7 +87,7 @@ module ds18b20 #(
   * // CPU bus interface
   * input            bus_ren,  // read  enable registers
   * input            bus_wen,  // write enable registers
-  * input  [BAW-1:0] bus_adr,  // address 
+  * input  [BAW-1:0] bus_adr,  // address
   * input  [BDW-1:0] bus_wdt,  // write data
   * output [BDW-1:0] bus_rdt,  // read  data
   * output           bus_irq,  // interrupt request
@@ -119,7 +119,7 @@ module ds18b20 #(
 	);
 
   // Command enumeration
-  parameter 
+  parameter
     c_idle          = 0,
     c_reset_detect  = 1,
     c_skip_rom      = 2,
@@ -155,11 +155,50 @@ module ds18b20 #(
   // shorthand for the 8 bit status register of OWM
   assign w_owrstatus = bus_rdt[7:0];
 
-  // Tasks to prevent repetitive code
-  
+  /*
+   * ===============================
+   * Reset the DS18:20 and detect the device
+   * ===============================
+   */
+  task t_reset_detect_command;
+    begin
+      case (r_state)
+        s_start : begin
+          // Setup the registers to start a reset and detect cycle
+          bus_ren <= 1'b0;   // Read enable
+          bus_wen <= 1'b1;   // Write enable
+          bus_adr <= 1'b0;   // Address bus implicit for clarity
+          bus_wdt <= 32'h0000000A; // bit 1,4 reset and detect
+
+          r_state <= s_wait;
+        end
+
+        s_wait : begin
+          bus_ren <= 1'b1;   // Read enable
+          bus_adr <= 1'b0;   // Address bus implicit for clarity
+
+          // Wait till the end of the cycle
+          if ( r_owrstatus_prev[3] == 1'b1 && w_owrstatus[3] == 1'b0 ) begin
+            if ( w_owrstatus[0] == 1'b0 ) begin
+              // device detected
+              r_detect <= 1'b1;
+            end else begin
+              // no device detected
+              r_detect <= 1'b0;
+            end
+            r_irq <= 1'b1;
+            r_busy <= 1'b0;
+            r_command <= c_idle;
+          end
+        end
+
+      endcase
+    end
+  endtask
+
   /*
    * This task sends commands and pulls the correct pins high
-   */ 
+   */
   task t_send_command;
     input [7:0] a_send_command;
     case (r_state)
@@ -177,7 +216,7 @@ module ds18b20 #(
 
       // Gets called when the sending of the byte is done
       s_done : begin
-        r_busy <= 1'b0; 
+        r_busy <= 1'b0;
         r_irq <= 1'b1;
         r_command <= c_idle;
       end
@@ -189,59 +228,58 @@ module ds18b20 #(
    * The temperature is put on the o_data, as 16 bit signed value.
    */
   task t_read_temp;
-    reg [$clog2(p_scratch_len)-1:0] r_scratch_count_loc;
 
-    case (r_state)
-      // Initialize task
-      s_start : begin
-        r_scratch_count <= 'b0;
-        r_scratch_count_loc = 'b0;
-        r_scratch_buf <= 'b0;
-        r_state <= s_start_cycle;
-      end
-
-      // Setup, wait for the conversion to complete
-      s_start_cycle : begin
-        // Initiate read cycle by writing '1'
-        bus_ren <= 1'b0;   // Read enable
-        bus_wen <= 1'b1;   // Write enable
-        bus_adr <= 1'b0;   // Address bus implicit for clarity
-        bus_wdt <= 32'h00000009; // 0 and 3 to  start a cycle and write 1
-        // Wait for the result
-        r_state <= s_wait;
-
-        // Indicate waiting is in progress
-        r_busy <= 1'b1;
-      end
-
-      // Read the result, if 0, return
-      s_wait : begin
-        bus_ren <= 1'b1;   // Read enable
-        bus_adr <= 1'b0;   // Address bus implicit for clarity
-
-        if(w_owrstatus[3] == 1'b0) begin
-          r_scratch_count_loc = r_scratch_count + 1;
-          r_scratch_count <= r_scratch_count_loc;
-          
-          // Save bit to the buffer
-          r_scratch_buf[r_scratch_count] <= w_owrstatus[0];
-
-          // On byte (p_scratch_len - 1), we are done
-          if(r_scratch_count_loc == p_scratch_len) begin
-            r_data  <= r_scratch_buf[31:16]; 
-            r_state <= s_done;
-          end else
-            r_state <= s_start_cycle;
+    begin
+      case (r_state)
+        // Initialize task
+        s_start : begin
+          r_scratch_count <= 'b0;
+          r_scratch_buf <= 'b0;
+          r_state <= s_start_cycle;
         end
-      end
 
-      // When done
-      s_done : begin
-        r_busy <= 1'b0; 
-        r_irq <= 1'b1;
-        r_command <= c_idle;
-      end
-    endcase
+        // Setup, wait for the conversion to complete
+        s_start_cycle : begin
+          // Initiate read cycle by writing '1'
+          bus_ren <= 1'b0;   // Read enable
+          bus_wen <= 1'b1;   // Write enable
+          bus_adr <= 1'b0;   // Address bus implicit for clarity
+          bus_wdt <= 32'h00000009; // 0 and 3 to  start a cycle and write 1
+          // Wait for the result
+          r_state <= s_wait;
+
+          // Indicate waiting is in progress
+          r_busy <= 1'b1;
+        end
+
+        // Read the result, if 0, return
+        s_wait : begin
+          bus_ren <= 1'b1;   // Read enable
+          bus_adr <= 1'b0;   // Address bus implicit for clarity
+
+          if(r_owrstatus_prev[3] == 1'b1 && w_owrstatus[3] == 1'b0) begin
+            r_scratch_count <= r_scratch_count + 1;
+
+            // Save bit to the buffer
+            r_scratch_buf[r_scratch_count] <= w_owrstatus[0];
+
+            // On byte (p_scratch_len - 1), we are done
+            if(r_scratch_count == p_scratch_len) begin
+              r_data  <= r_scratch_buf[15:0];
+              r_state <= s_done;
+            end else
+              r_state <= s_start_cycle;
+          end
+        end
+
+        // When done
+        s_done : begin
+          r_busy <= 1'b0;
+          r_irq <= 1'b1;
+          r_command <= c_idle;
+        end
+      endcase
+    end
   endtask
 
   /*
@@ -256,7 +294,7 @@ module ds18b20 #(
         bus_ren <= 1'b0;   // Read enable
         bus_wen <= 1'b1;   // Write enable
         bus_adr <= 1'b0;   // Address bus implicit for clarity
-        bus_wdt <= 32'h00000009; // bit 0,3  reset and detect 
+        bus_wdt <= 32'h00000009; // bit 0,3  reset and detect
         // Wait for the result
         r_state <= s_wait;
 
@@ -270,7 +308,7 @@ module ds18b20 #(
         bus_adr <= 1'b0;   // Address bus implicit for clarity
 
         if(w_owrstatus[3] == 1'b0) begin
-          if (w_owrstatus[0] == 1'b0) begin
+          if (w_owrstatus[0] == 1'b1) begin
             // When a 1 is found, we are done
             r_state <= s_done;
           end else begin
@@ -282,11 +320,53 @@ module ds18b20 #(
 
       // When done
       s_done : begin
-        r_busy <= 1'b0; 
+        r_busy <= 1'b0;
         r_irq <= 1'b1;
         r_command <= c_idle;
       end
     endcase
+  endtask
+
+  task t__write_word;
+    begin
+      case (r__state)
+        s_start : begin
+          r_send_count <= 0;
+
+          r__state <= s_write_bit;
+        end
+
+        s_write_bit : begin
+          // Send a transmit bit command
+          bus_ren <= 1'b0;   // Read enable
+          bus_wen <= 1'b1;   // Write enable
+          bus_adr <= 1'b0;   // Address bus implicit for clarity
+          bus_wdt <= 32'h00000008 | {31'b0, r_send_word[r_send_count[3:0]]}; // bit 1,4 reset and detect
+
+          // Handle end of char transmission
+          if (r_send_count == 'd16) begin
+            r__state <= s_start;  // restore sub state
+            r_command <= r_command_ret; // return to regular state machine
+          end else begin
+            r__state <= s_wait_bit;     // Next bit
+
+            // next bit
+            r_send_count <= r_send_count+1;
+          end
+        end
+
+        // Wait for sending of the byte to complete
+        s_wait_bit : begin
+          bus_ren <= 1'b1;   // Read enable
+          bus_adr <= 1'b0;   // Address bus implicit for clarity
+
+          // Wait for the end of the write cycle
+          if ( r_owrstatus_prev[3] == 1'b1 && w_owrstatus[3] == 1'b0 ) begin
+            r__state <= s_write_bit;
+          end
+        end
+      endcase
+    end
   endtask
 
   /*
@@ -314,129 +394,25 @@ module ds18b20 #(
       r_busy    <= 1'b1;
     end
 
-    /*
-     * ===============================
-     * Reset the DS18:20 and detect the device
-     * ===============================
-     */
-    if (r_command == c_reset_detect) begin
-      case (r_state)
-        s_start : begin
-          // Setup the registers to start a reset and detect cycle
-          bus_ren <= 1'b0;   // Read enable
-          bus_wen <= 1'b1;   // Write enable
-          bus_adr <= 1'b0;   // Address bus implicit for clarity
-          bus_wdt <= 32'h0000000A; // bit 1,4 reset and detect 
+    case(r_command)
+      c_reset_detect :
+        t_reset_detect_command();
 
-          r_state <= s_wait;
-        end
+      c_convert_t :
+        t_send_command(8'h44);
 
-        s_wait : begin
-          bus_ren <= 1'b1;   // Read enable
-          bus_adr <= 1'b0;   // Address bus implicit for clarity
+      c_read_scratch :
+        t_send_command(8'hBE);
 
-          // Wait till the end of the cycle
-          if ( r_owrstatus_prev[3] == 1'b1 && w_owrstatus[3] == 1'b0 ) begin
-            if ( w_owrstatus[0] == 1'b0 ) begin
-              // device detected
-              r_detect <= 1'b1; 
-            end else begin
-              // no device detected
-              r_detect <= 1'b0;
-            end 
-            r_irq <= 1'b1;
-            r_busy <= 1'b0;
-            r_command <= c_idle;
-          end
-        end
+      c_poll_wait :
+        t_poll_wait();
 
-      endcase
-    end
+      c_output_temp :
+        t_read_temp();
 
-    /*
-     * ===============================
-     * Send the convert temperature command
-     * ===============================
-     */
-    if (r_command == c_convert_t) begin
-      t_send_command(8'h44);
-    end
-
-    /*
-     * ===============================
-     * Send the read scratch command
-     * ===============================
-     */
-    if (r_command == c_read_scratch) begin
-      t_send_command(8'hBE);
-    end
-
-    /*
-     * ===============================
-     * Keep reading until a one is received
-     * ===============================
-     */
-    if (r_command == c_poll_wait) begin
-      t_poll_wait();
-    end
-
-    /*
-     * ===============================
-     * Keep reading until a one is received
-     * ===============================
-     */
-    if (r_command == c_output_temp) begin
-      t_read_temp();
-    end
-
-    /*
-     * ===============================
-     * Sending of a word (2 bytes)
-     * ===============================
-     * reg        r_enable    : Pull high to start the transfer
-     * reg [15:0] r_send_word : The 8-bit array (char) to send
-     * reg        r_send_irq  : high 1 cycle when send is done (active high)
-     * reg        r_send_busy : high during transfer
-     */
-    if (r_command == c__write_word) begin
-      case (r__state)
-        s_start : begin
-          r_send_count <= 0;
-
-          r__state <= s_write_bit;
-        end
-
-        s_write_bit : begin
-          // Send a transmit bit command
-          bus_ren <= 1'b0;   // Read enable
-          bus_wen <= 1'b1;   // Write enable
-          bus_adr <= 1'b0;   // Address bus implicit for clarity
-          bus_wdt <= 32'h00000008 | {31'b0, r_send_word[r_send_count[3:0]]}; // bit 1,4 reset and detect 
-
-          // Handle end of char transmission
-          if (r_send_count == 'd16) begin
-            r__state <= s_start;  // restore sub state
-            r_command <= r_command_ret; // return to regular state machine
-          end else begin
-            r__state <= s_wait_bit;     // Next bit
-
-            // next bit
-            r_send_count <= r_send_count+1;
-          end
-        end
-
-        // Wait for sending of the byte to complete
-        s_wait_bit : begin
-          bus_ren <= 1'b1;   // Read enable
-          bus_adr <= 1'b0;   // Address bus implicit for clarity
-
-          // Wait for the end of the write cycle
-          if ( r_owrstatus_prev[3] == 1'b1 && w_owrstatus[3] == 1'b0 ) begin
-            r__state <= s_write_bit;
-          end
-        end
-      endcase
-    end
+      c__write_word :
+        t__write_word();
+    endcase
 
     // Handle reset
     if (i_rst == 1'b1) begin

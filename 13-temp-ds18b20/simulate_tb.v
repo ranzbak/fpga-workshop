@@ -45,6 +45,10 @@ module testbench;
     i_one_wire_reg = 1'b0;
     repeat (200) @(posedge clk);
     i_one_wire_reg = 1'b1;
+    repeat (1929) @(posedge clk);
+    i_one_wire_reg = 1'b0;
+    repeat (200) @(posedge clk);
+    i_one_wire_reg = 1'b1;
   end
   assign i_one_wire = i_one_wire_reg;
 

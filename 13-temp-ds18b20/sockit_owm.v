@@ -134,7 +134,7 @@ wire bus_wen_cdr_n;
 wire bus_wen_cdr_o;
 
 // read data bus segments
-wire     [7:0] bus_rdt_ctl_sts;
+wire [7:0]     bus_rdt_ctl_sts;
 wire [PDW-1:0] bus_rdt_pwr_sel;
 
 // clock divider
@@ -148,9 +148,11 @@ reg            owr_cyc;  // cycle status
 reg  [TDW-1:0] cnt;      // cycle counter
 
 // port select
-//generate if (OWN>1) begin : sel_declaration
-reg  [SDW-1:0] owr_sel;
-//end endgenerate
+reg owr_sel;
+generate if (OWN>1) begin
+  reg [SDW-1:0] owr_sel;
+end
+endgenerate
 
 // modified input data for overdrive
 wire           req_ovd;
@@ -314,14 +316,14 @@ generate if (OWN>1) begin : sel_implementation
   always @ (posedge clk, posedge rst)
   if (rst)                   owr_sel <= {SDW{1'b0}};
   else if (bus_wen_pwr_sel)  owr_sel <= bus_wdt[(BDW==32 ?  8 : 0)+:SDW];
-  
+
   // power delivery
   always @ (posedge clk, posedge rst)
   if (rst)                   owr_pwr <= {OWN{1'b0}};
   else if (bus_wen_pwr_sel)  owr_pwr <= bus_wdt[(BDW==32 ? 16 : 4)+:OWN];
 end else begin
   // port select
-  initial                    owr_sel <= 'd0; 
+  initial                    owr_sel = 'd0;
   // power delivery
   always @ (posedge clk, posedge rst)
   if (rst)                   owr_pwr <= 1'b0;
@@ -337,8 +339,8 @@ assign bus_irq = irq_ena & irq_sts;
 
 // interrupt enable
 always @ (posedge clk, posedge rst)
-if (rst)                   irq_ena <= 1'b0;     
-else if (bus_wen_ctl_sts)  irq_ena <= bus_wdt[7]; 
+if (rst)                   irq_ena <= 1'b0;
+else if (bus_wen_ctl_sts)  irq_ena <= bus_wdt[7];
 
 // transmit status (active after onewire cycle ends)
 always @ (posedge clk, posedge rst)
@@ -353,7 +355,7 @@ end
 // onewire state machine
 //////////////////////////////////////////////////////////////////////////////
 
-assign req_ovd = OVD_E ? bus_wen_ctl_sts & bus_wdt[2] : 1'b0; 
+assign req_ovd = OVD_E ? bus_wen_ctl_sts & bus_wdt[2] : 1'b0;
 
 // overdrive
 always @ (posedge clk, posedge rst)

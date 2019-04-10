@@ -23,8 +23,8 @@ module chip (
     	);
 
   // Keep the timer high for the first 4096 cycles
-  // To let the system stabilize 
-	always @(posedge w_clk) 
+  // To let the system stabilize
+	always @(posedge w_clk)
   begin
     if(reset_count > 0) begin
       reset <= 1'b1;
