@@ -1,3 +1,8 @@
+# Description
+
+This example demonstrates a state machine that handles IO with an external device.
+The device drives LEDS to indicate a temperature range, blue <20'c, green >20'c <25'C, rood > 25'C.
+When something fails the LED will shine white, when the LED stays off, check if pin 42 (reset) is grounded.
 
 # Temp DS18B20
 
@@ -6,9 +11,53 @@ In this case a one-wire module is used to drive a DS18B20 temperature sensor.
 Because of the states the transactions go through and the process as a whole goes through,
 a state machine is used that works in multiple layers.
 
-* read\_temp - Drives the transactions that need to be done to perform the read cycle.
+* read\_temp - Contains the high level state machine running through the commands
 * ds18b20 - Drives the IC, sending the commands and waiting for the responses.
 * sockit_owm - Encodes/decodes data over the one-wire protocol.
+
+# Requirements
+
+* Yosys
+* Arachne-pnr
+* Project IceStorm
+* DS18B20
+* 4.7kOhm Resistor
+* Breadboard
+* Some dupont wire
+
+# Schema
+
+```ascii
+ VCC +3.3V
++------+----------------+-------------------------------+
+       |                |
+       |              +-+-+
+       |3             | 4 |
++----------------+    | . |    +------------------+
+|                |    | 7 |    |                  |
+|                |    +-+-+    |                  |
+|                |      |      |                  |
+|  DS18B20       +------+------+     ICE40        |
+|                |2         43 |                  |
+|                |             |                  |
+|                |             |                  |
++----------------+             +------------------+
+       |1
+       |
++------+------------------------------------------------+
+ GND
+
+
+  TO92 package
+  DS18B20
+ +----------+
+ |  1  2  3 |
+ |          |
+ +-+      +-+
+   --------
+ GND  SIG  VCC
+```
+
 
 # Requirements
 
