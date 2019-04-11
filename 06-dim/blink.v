@@ -13,35 +13,36 @@
 *                                                                             *
 ******************************************************************************/
 
-module blink(input clk, input rst, output led_r, output led_g, output led_b);
+module blink(input i_clk, input i_rst, output o_led_r, output o_led_g, output o_led_b);
   // Cycle bits
-  parameter r_bit=25;
-  parameter g_bit=24;
-  parameter b_bit=23;
+  parameter r_bit_r=25; // (1.4Hz)
+  parameter r_bit_g=24; // (2.8Hz)
+  parameter r_bit_b=23; // (5.7Hz)
 
-  // Dim bits bit 16 around 800Hz)
-  parameter d_bit=16;
+  // Have a counter of 25 bits (0.7Hz)
+  parameter p_bit_count = 25;
+  // Dim bits bit 16 around (800Hz)
+  parameter p_bit_d     = 16;
 
-	reg [25:0] count;
+	reg [p_bit_count:0] r_count;
   
   // Permanent assignments
   // RED LED by default pick bit 25 (0.7 seconds)
-	assign led_r = count[r_bit] || count[d_bit] || count[d_bit-1] || count[d_bit-2] || count[d_bit-3];
+	assign o_led_r = r_count[r_bit_r] || r_count[p_bit_d] || r_count[p_bit_d-1] || r_count[p_bit_d-2] || r_count[p_bit_d-3];
   // GREEN LED by default pick bit 24 (0.35 seconds)
-  assign led_g = count[g_bit] || count[d_bit] || count[d_bit-1] || count[d_bit-2] || count[d_bit-3];
+  assign o_led_g = r_count[r_bit_g] || r_count[p_bit_d] || r_count[p_bit_d-1] || r_count[p_bit_d-2] || r_count[p_bit_d-3];
   // BLUE LED by default pick bit 23 (0.13 secounds)
-  assign led_b = count[b_bit] || count[d_bit] || count[d_bit-1] || count[d_bit-2] || count[d_bit-3];
+  assign o_led_b = r_count[r_bit_b] || r_count[p_bit_d] || r_count[p_bit_d-1] || r_count[p_bit_d-2] || r_count[p_bit_d-3];
 
   // always at clock pulse
-	always @(posedge clk)
+	always @(posedge i_clk)
   begin
-    if(rst)
-    begin
-      count = 0;
-    end
-    else
-    begin
-      count <= count + 1;
+    if(i_rst) begin
+      // Hold to zero during reset
+      r_count = 0;
+    end else begin
+      // Count!
+      r_count <= r_count + 1;
     end
   end
 

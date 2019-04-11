@@ -1,36 +1,35 @@
 [*]
 [*] GTKWave Analyzer v3.3.86 (w)1999-2017 BSI
-[*] Mon Mar 18 22:36:40 2019
+[*] Thu Apr 11 21:40:01 2019
 [*]
-[dumpfile] "/home/paul/work/fpga/icestorm/fpga_workshop/03-blink/blink_tb.vcd"
-[dumpfile_mtime] "Mon Mar 18 22:29:12 2019"
-[dumpfile_size] 8482933
-[savefile] "/home/paul/work/fpga/icestorm/fpga_workshop/03-blink/default.gtkw"
+[dumpfile] "/home/paul/work/fpga/icestorm/fpga_workshop/06-dim/blink_tb.vcd"
+[dumpfile_mtime] "Thu Apr 11 21:37:33 2019"
+[dumpfile_size] 8483036
+[savefile] "/home/paul/work/fpga/icestorm/fpga_workshop/06-dim/default.gtkw"
 [timestart] 0
 [size] 1592 750
 [pos] -1 -1
-*-4.000000 2 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-17.000000 26200 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] testbench.
 [sst_width] 202
-[signals_width] 118
+[signals_width] 201
 [sst_expanded] 1
 [sst_vpaned_height] 200
 @28
-[color] 2
-testbench.uut.clk
+testbench.uut.i_clk
+@29
+testbench.uut.i_rst
 @22
-testbench.uut.count[25:0]
-@28
-testbench.uut.rst
+testbench.uut.r_count[25:0]
 @800200
 -LEDS
 @28
-[color] 5
-testbench.uut.led_b
-[color] 4
-testbench.uut.led_g
 [color] 1
-testbench.uut.led_r
+testbench.w_led_r
+[color] 4
+testbench.w_led_g
+[color] 5
+testbench.w_led_b
 @1000200
 -LEDS
 [pattern_trace] 1

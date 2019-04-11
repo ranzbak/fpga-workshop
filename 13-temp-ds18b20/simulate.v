@@ -1,4 +1,4 @@
-// A simple circuit that can be used to detect brownouts and other hardware issues
+// Testing the circuit with altered clock deviders
 
 module sim_top (
   input clk,

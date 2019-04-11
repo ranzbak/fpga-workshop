@@ -1,14 +1,14 @@
-
+// Example 01 Hello world
 module chip (
-	output	LED_R,
+	output	O_LED_R
 	);
 
   // A wire
-	wire  led_r;
+	wire  w_led_r;
 
   // Continuous assignment to a wire
-	assign led_r = 1'b0;
+	assign w_led_r = 1'b0;
 
   // Connecting the wire to the output
-	assign LED_R = led_r;
+	assign O_LED_R = w_led_r;
 endmodule

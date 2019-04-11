@@ -1,3 +1,4 @@
+// Set the timescale Timescale/Time Precision
 `timescale 100ns / 10ns
 
 module testbench;

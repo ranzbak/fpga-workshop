@@ -13,41 +13,41 @@
 *                                                                             *
 ******************************************************************************/
 
-module led(input clk, input rst, output led_r, output led_g, output led_b);
+module led(input i_clk, input i_rst, output o_led_r, output o_led_g, output o_led_b);
 
   // Source
-  reg led_g_var;
-  reg led_r_reg;
+  reg r_led_g_var;
+  reg r_led_r_reg;
 
   // Dest
-  reg dest_led_g_var;
-  reg dest_led_r_reg;
+  reg r_dest_led_g_var;
+  reg r_dest_led_r_reg;
   
   // Permanent assignments
-  assign led_b = 1'b1;
+  assign o_led_b = 1'b1;
 
   // always at clock pulse
-  always @(posedge clk)
+  always @(posedge i_clk)
   begin
     // Set RED and GREEN to on (low is on)  
-    led_r_reg <= 1'b0;
-    led_g_var =  1'b0;
+    r_led_r_reg <= 1'b0;
+    r_led_g_var =  1'b0;
  
     // Copy the register and the variable to the output wires 
-    dest_led_r_reg <= led_r_reg; 
-    dest_led_g_var <= led_g_var;
+    r_dest_led_r_reg <= r_led_r_reg; 
+    r_dest_led_g_var <= r_led_g_var;
   
     // Set RED and GREEN to off (higt is off)
-    led_r_reg <= 1'b1;
-    led_g_var = 1'b1;
+    r_led_r_reg <= 1'b1;
+    r_led_g_var = 1'b1;
 
     // After programming for the first time uncomment the two lines below
-    //led_r <= led_r_reg; 
-    //led_g <= led_g_var;
+    //r_led_r <= r_led_r_reg; 
+    //r_led_g <= r_led_g_var;
   end
 
   // Assign the registers to the output
-  assign led_r = dest_led_r_reg;
-  assign led_g = dest_led_g_var;
+  assign o_led_r = r_dest_led_r_reg;
+  assign o_led_g = r_dest_led_g_var;
 
 endmodule

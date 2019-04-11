@@ -13,30 +13,30 @@
 *                                                                             *
 ******************************************************************************/
 
-module blink(input clk, input rst, output led_r, output led_g, output led_b);
+module blink(input i_clk, input i_rst, output o_led_r, output o_led_g, output o_led_b);
   // Count bits
-  parameter r_bit=25;
-  parameter g_bit=24;
-  parameter b_bit=23;
+  parameter p_bit_r=25;
+  parameter p_bit_g=24;
+  parameter p_bit_b=23;
 
   // Counter register
-	reg signed [25:0] count;
+	reg [25:0] r_count;
   
   // Permanent assignments
-	assign led_r = count[r_bit];
-  assign led_g = count[g_bit];
-  assign led_b = count[b_bit];
+	assign o_led_r = r_count[p_bit_r];
+  assign o_led_g = r_count[p_bit_g];
+  assign o_led_b = r_count[p_bit_b];
 
   // always at clock pulse
-	always @(posedge clk)
+	always @(posedge i_clk)
   begin
-    if(rst)
+    if(i_rst)
     begin
-      count <= 0;
+      r_count <= 0;
     end
     else
     begin
-      count <= count + 1;
+      r_count <= r_count + 1;
     end
   end
 

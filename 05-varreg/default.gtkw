@@ -1,10 +1,10 @@
 [*]
 [*] GTKWave Analyzer v3.3.86 (w)1999-2017 BSI
-[*] Tue Mar 19 19:36:59 2019
+[*] Thu Apr 11 21:05:23 2019
 [*]
 [dumpfile] "/home/paul/work/fpga/icestorm/fpga_workshop/05-varreg/led_tb.vcd"
-[dumpfile_mtime] "Tue Mar 19 19:35:57 2019"
-[dumpfile_size] 2878
+[dumpfile_mtime] "Thu Apr 11 21:02:54 2019"
+[dumpfile_size] 2906
 [savefile] "/home/paul/work/fpga/icestorm/fpga_workshop/05-varreg/default.gtkw"
 [timestart] 0
 [size] 1753 633
@@ -15,34 +15,31 @@
 [signals_width] 165
 [sst_expanded] 1
 [sst_vpaned_height] 158
-@29
-[color] 3
-testbench.uut.clk
+@28
+testbench.uut.i_clk
 @800200
 -INPUT
 @28
-testbench.uut.led_g_var
-[color] 1
-testbench.uut.led_r_reg
+testbench.uut.r_led_r_reg
+testbench.uut.r_led_g_var
 @1000200
 -INPUT
 @800200
 -OUTPUT
 @28
-testbench.uut.dest_led_g_var
-[color] 1
-testbench.uut.dest_led_r_reg
+testbench.uut.r_dest_led_r_reg
+testbench.uut.r_dest_led_g_var
 @1000200
 -OUTPUT
 @800200
 -LEDS
 @28
 [color] 1
-testbench.uut.led_r
+testbench.w_led_r
 [color] 4
-testbench.uut.led_g
+testbench.w_led_g
 [color] 5
-testbench.uut.led_b
+testbench.w_led_b
 @1000200
 -LEDS
 [pattern_trace] 1
