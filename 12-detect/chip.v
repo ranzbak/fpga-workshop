@@ -35,14 +35,14 @@ module chip (
 
   // Temperature sensor
 	temp my_temp (
-		.clk(clk),
-		.rst(reset),
-    		.led_r(led_r),
-    		.led_g(led_g),
-    		.led_b(led_b),
-        .owr_in(owr_in),
-        .owr_out(owr_out)
-	);
+    .i_clk(clk),
+    .i_rst(reset),
+    .o_led_r(led_r),
+    .o_led_g(led_g),
+    .o_led_b(led_b),
+    .i_owr(owr_in),
+    .i_owr(owr_out)
+  );
 
   // Configure and connect the IO_ONE_WIRE pin
   SB_IO #(

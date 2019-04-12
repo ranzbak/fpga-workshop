@@ -1,31 +1,26 @@
 
 module chip (
-	output	LED_R,
-	output	LED_G,
-	output	LED_B,
-  input   INPUT_1
+  input   I_USER_1,
+	output	O_LED_R,
+	output	O_LED_G,
+	output	O_LED_B
 	);
 
-	wire clk, led_r, led_g, led_b, reset;
+	wire w_clk;
 
-	SB_HFOSC u_hfosc (
-        	.CLKHFPU(1'b1),
-        	.CLKHFEN(1'b1),
-        	.CLKHF(clk)
-    	);
+  // Clock devided to 24 MHz
+  SB_HFOSC u_hfosc (
+    .CLKHFPU(1'b1),
+    .CLKHFEN(1'b1),
+    .CLKHF(w_clk)
+  );
 
-	morse my_morse (
-		.clk(clk),
-		.rst(reset),
-    		.led_r(led_r),
-    		.led_g(led_g),
-    		.led_b(led_b)
-	);
+  morse my_morse (
+    .i_clk(w_clk),
+    .i_rst(I_USER_1),
+    .o_led_r(O_LED_R),
+    .o_led_g(O_LED_G),
+    .o_led_b(O_LED_B)
+  );
 
-	assign LED_R = led_r;
-	assign LED_G = led_g;
-	assign LED_B = led_b;
-
-  assign reset = INPUT_1;
-
-endmodule
+  endmodule

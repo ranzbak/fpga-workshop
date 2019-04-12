@@ -13,62 +13,69 @@
 *                                                                             *
 ******************************************************************************/
 
-module morse(input clk, input rst, output led_r, output led_g, output led_b);
+module morse (
+  input  i_clk,
+  input  i_rst,
+  output o_led_r,
+  output o_led_g,
+  output o_led_b
+  );
 
-	reg [25:0] count = 0;
-  reg [6:0] morse_state = 0;
-  reg led_r_reg = 0;
-  reg led_g_reg = 0;
-  reg led_b_reg = 0;
+	reg [$clog2('hffffff)-1:0] r_count = 0;
+  reg [6:0]  r_morse_state = 0;
+  reg        r_led_r = 0;
+  reg        r_led_g = 0;
+  reg        r_led_b = 0;
 
-  task morse;
-    input [23:0] count_on;
-    input [23:0] count_off;
-    output reg led_morse;
+  task t_morse;
+    input [23:0] i_count_on;
+    input [23:0] i_count_off;
+    output o_led_morse;
 
     begin
-      if(count < count_on)
-        led_morse <= 1'b0;
-      else if(count < (count_on + count_off))
-        led_morse <= 1'b1;
+      if(r_count < i_count_on)
+        o_led_morse = 1'b0; // Important: blocking assignment
+      else if(r_count < (i_count_on + i_count_off))
+        o_led_morse = 1'b1; // Important: blocking assignment
       else
-        count <= 26'h0;
+        r_count <= 26'h0;
     end
 
   endtask
 
   // This Task is called to show a dash
-  task morse_did;
-    output led_morse;
+  task t_morse_did;
+    output o_led_morse;
     
     begin
       // On time, Off time 
       // On = h493e00 +- 100ms
       // Off =  h493e00 +- 100ms
-      morse(24'h493e00, 24'h500000, led_morse);
+      t_morse(24'h493e00, 24'h500000, o_led_morse);
     end
   endtask
 
   // This Task is called to show a dash
-  task morse_dash;
-    output led_morse;
+  task t_morse_dash;
+    output o_led_morse;
     
     begin
       // On time, Off time 
       // On = h493e00 +- 100ms
       // Off =  h493e00 +- 100ms
-      morse(24'hdbba00, 24'h493e00, led_morse);
+      t_morse(24'hdbba00, 24'h493e00, o_led_morse);
     end
   endtask
 
   // This Task is called to show a dash
-  task morse_rest;
-    
+  task t_morse_rest;
+    reg r_bogus;
+
     begin
       // On time, Off time 
       // On = h000000 Not on
       // Off = hffffff +- 0.35 seconds 
-      morse(24'h000000, 24'hffffff);
+      t_morse(24'h000000, 24'hffffff, r_bogus);
     end
   endtask
 
@@ -88,98 +95,89 @@ module morse(input clk, input rst, output led_r, output led_g, output led_b);
     rest  = 10; // Off
   
   // Assign the register to the wire
-  assign led_r = led_r_reg;
-  assign led_g = led_g_reg;
-  assign led_b = led_b_reg;
+  assign o_led_r = r_led_r;
+  assign o_led_g = r_led_g;
+  assign o_led_b = r_led_b;
   
   // always at clock pulse
-	always @(posedge clk)
+	always @(posedge i_clk)
   begin
-    if (rst == 1'b0) begin
+    if (i_rst == 1'b1) begin
       // Reset state
-      count <= 0;
-      morse_state <= start;
+      r_count <= 0;
+      r_morse_state <= start;
 
       // LEDs off
-      led_r_reg <= 1'b1;
-      led_g_reg <= 1'b1;
-      led_b_reg <= 1'b1;
+      r_led_r <= 1'b1;
+      r_led_g <= 1'b1;
+      r_led_b <= 1'b1;
     end else begin
-      count <= count + 1;
+      r_count <= r_count + 1;
 
-      led_g_reg <= 1'b1;
-      led_b_reg <= 1'b1;
+      r_led_g <= 1'b1;
+      r_led_b <= 1'b1;
 
-      case(morse_state)
+      case(r_morse_state)
         start : begin
-          morse_rest(led_r_reg);
-          if(count == 26'h0)
-            morse_state <= s_0_0;
+          t_morse_rest(r_led_r);
+          if(r_count == 26'h0)
+            r_morse_state <= s_0_0;
         end
         s_0_0 : begin
-          morse_did(led_r_reg);
-          if(count == 26'h0)
-            morse_state <= s_0_1;
+          t_morse_did(r_led_r);
+          if(r_count == 26'h0)
+            r_morse_state <= s_0_1;
         end
         s_0_1 : begin
-          morse_did(led_r_reg);
-          if(count == 26'h0)
-            morse_state <= s_0_2;
+          t_morse_did(r_led_r);
+          if(r_count == 26'h0)
+            r_morse_state <= s_0_2;
         end
         s_0_2 : begin
-          morse_did(led_r_reg);
-          if(count == 26'h0)
-            morse_state <= o_1_0;
+          t_morse_did(r_led_r);
+          if(r_count == 26'h0)
+            r_morse_state <= o_1_0;
         end
         o_1_0 : begin
-          led_b_reg <= 1'b1;
-          morse_dash(led_r_reg);
-          if(count == 26'h0)
-            morse_state <= o_1_1;
+          r_led_b <= 1'b1;
+          t_morse_dash(r_led_r);
+          if(r_count == 26'h0)
+            r_morse_state <= o_1_1;
         end
         o_1_1 : begin
-          morse_dash(led_r_reg);
-          if(count == 26'h0)
-            morse_state <= o_1_2;
+          t_morse_dash(r_led_r);
+          if(r_count == 26'h0)
+            r_morse_state <= o_1_2;
         end
         o_1_2 : begin
-          morse_dash(led_r_reg);
-          if(count == 0)
-            morse_state <= s_2_0;
+          t_morse_dash(r_led_r);
+          if(r_count == 0)
+            r_morse_state <= s_2_0;
         end
         s_2_0 : begin
-          morse_did(led_r_reg);
-          if(count == 0)
-            morse_state <= s_2_1;
+          t_morse_did(r_led_r);
+          if(r_count == 0)
+            r_morse_state <= s_2_1;
         end
         s_2_1 : begin
-          morse_did(led_r_reg);
-          if(count == 0)
-            morse_state <= s_2_2;
+          t_morse_did(r_led_r);
+          if(r_count == 0)
+            r_morse_state <= s_2_2;
         end
         s_2_2 : begin
-          morse_did(led_r_reg);
-          if(count == 0)
-            morse_state <= rest;
+          t_morse_did(r_led_r);
+          if(r_count == 0)
+            r_morse_state <= rest;
         end
         rest : begin
-          morse_rest(led_r_reg);
-          if(count == 0)
-            morse_state <= start;
+          t_morse_rest(r_led_r);
+          if(r_count == 0)
+            r_morse_state <= start;
         end
         default : 
-          morse_state <= start;
+          r_morse_state <= start;
       endcase
     end
   end
 
 endmodule
-
-
-  parameter
-    start        = 0, // Start the sequence
-    waitforinput = 1, // Wait for input
-    decode       = 2, // Decode received character
-    execute      = 3, // Implement command
-    done         = 4; // Done, return to start
-

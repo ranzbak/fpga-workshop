@@ -1,5 +1,5 @@
-set_io LED_R	41
-set_io LED_G	39
-set_io LED_B	40
+set_io O_LED_R	41
+set_io O_LED_G	39
+set_io O_LED_B	40
 
-set_io INPUT_1 42
+set_io I_USER_1 42

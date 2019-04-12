@@ -13,57 +13,57 @@
 *                                                                             *
 ******************************************************************************/
 
-module blink(input clk, input rst, output led_r, output led_g, output led_b);
+module blink(input i_clk, input i_rst, output o_led_r, output o_led_g, output o_led_b);
   // Cycle bits
-  parameter r_bit=25;
-  parameter g_bit=24;
-  parameter b_bit=23;
+  parameter p_bit_r=25;
+  parameter p_bit_g=24;
+  parameter p_bit_b=23;
 
   // Dim bits bit 16 around 800Hz)
-  parameter d_bit=16;
+  parameter p_bit_dev=16;
 
   // output registers
-  reg out_led_r;
-  reg out_led_g;
-  reg out_led_b;
+  reg r_led_r;
+  reg r_led_g;
+  reg r_led_b;
 
-	reg [25:0] count;
+	reg [25:0] r_count = 'b0;
 
   // Dim the LED
   task dim;
-    input led_in; 
-    output led_out;
+    input i_led; 
+    output o_led;
     begin 
       // Count can be used from the module context
-      led_out = led_in || 
-                  count[d_bit] || 
-                  count[d_bit-1] || 
-                  count[d_bit-2] || 
-                  count[d_bit-3];
+      o_led = i_led || 
+        r_count[p_bit_dev] || 
+        r_count[p_bit_dev-1] || 
+        r_count[p_bit_dev-2] || 
+        r_count[p_bit_dev-3];
     end
   endtask
   
   // always at clock pulse
-	always @(posedge clk)
+	always @(posedge i_clk)
   begin
-    if(rst)
+    if(i_rst)
     begin
-      count = 0;
+      r_count = 0;
     end
     else
     begin
-      count <= count + 1;
+      r_count <= r_count + 1;
     end
 
     // Run the tasks to set the LED's
-    dim(count[r_bit], out_led_r);
-    dim(count[g_bit], out_led_g);
-    dim(count[b_bit], out_led_b);
+    dim(r_count[p_bit_r], r_led_r);
+    dim(r_count[p_bit_g], r_led_g);
+    dim(r_count[p_bit_b], r_led_b);
   end
 
   // Assign output register to output wires
-  assign led_r = out_led_r;
-  assign led_g = out_led_g;
-  assign led_b = out_led_b;
+  assign o_led_r = r_led_r;
+  assign o_led_g = r_led_g;
+  assign o_led_b = r_led_b;
 endmodule
 

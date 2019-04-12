@@ -5,14 +5,14 @@ module testbench;
   always #5 clk = (clk === 1'b0);
 
   wire led_r, led_g, led_b, i_one_wire, o_one_wire;
-  reg  rst;
+  reg  r_rst;
   reg i_one_wire_reg;
 
 
   // Instantiate the test bench
   sim_top uut (
-    .clk(clk),
-    .rst(rst),
+    .i_clk(clk),
+    .i_rst(r_rst),
     .O_LED_R(led_r),
     .O_LED_G(led_g),
     .O_LED_B(led_b),
@@ -33,9 +33,9 @@ module testbench;
 
   // Generate the reset
   initial begin
-    rst = 1'b1;
+    r_rst = 1'b1;
     repeat (10) @(posedge clk);
-    rst = 1'b0;
+    r_rst = 1'b0;
   end
 
   // One wire slave mock up
