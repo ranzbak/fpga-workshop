@@ -1,12 +1,12 @@
 [*]
 [*] GTKWave Analyzer v3.3.86 (w)1999-2017 BSI
-[*] Mon Apr  8 19:50:49 2019
+[*] Fri Apr 12 23:04:18 2019
 [*]
 [dumpfile] "/home/paul/work/fpga/icestorm/fpga_workshop/13-temp-ds18b20/simulate_tb.vcd"
-[dumpfile_mtime] "Mon Apr  8 19:49:02 2019"
-[dumpfile_size] 6548859
+[dumpfile_mtime] "Fri Apr 12 23:03:47 2019"
+[dumpfile_size] 5067469
 [savefile] "/home/paul/work/fpga/icestorm/fpga_workshop/13-temp-ds18b20/default.gtkw"
-[timestart] 42461000
+[timestart] 0
 [size] 1572 643
 [pos] 2207 0
 *-19.115993 6230 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
