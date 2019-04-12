@@ -6,8 +6,7 @@ for absolute beginners
 ## Sections
 
 * [01 Hello](01-hello)
-* [02 Hello](02-hello)
-* [02 Blink](02-blink)
+* [02 Module](02-module)
 * [03 Blink](03-blink)
 * [04 Parameters](04-parameter)
 * [05 Variables and Registers](05-varreg)
