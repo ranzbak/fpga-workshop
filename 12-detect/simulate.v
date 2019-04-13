@@ -17,11 +17,11 @@ module sim_top (
   ) my_temp (
     .i_clk(i_clk),
     .i_rst(i_rst),
-    .led_r(O_LED_R),
-    .led_g(O_LED_G),
-    .led_b(O_LED_B),
-    .owr_in(I_ONE_WIRE),
-    .owr_out(O_ONE_WIRE)
+    .o_led_r(O_LED_R),
+    .o_led_g(O_LED_G),
+    .o_led_b(O_LED_B),
+    .i_owr(I_ONE_WIRE),
+    .o_owr(O_ONE_WIRE)
   );
 
 endmodule
