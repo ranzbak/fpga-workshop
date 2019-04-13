@@ -30,8 +30,8 @@ module led(input i_clk, input i_rst, output o_led_r, output o_led_g, output o_le
   always @(posedge i_clk)
   begin
     // Set RED and GREEN to on (low is on)  
-    r_led_r_reg <= 0'b1;
-    r_led_g_var =  0'b1;
+    r_led_r_reg <= 1'b0;
+    r_led_g_var =  1'b0;
  
     // Copy the register and the variable to the output wires 
     r_dest_led_r_reg <= r_led_r_reg; 
