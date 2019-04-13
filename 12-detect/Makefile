@@ -24,7 +24,7 @@ test:
 	icepack $< $@
 
 %.rpt: %.asc
-	icetime -d $(TIME_DEVICE) -mtr $@ $< -c $(CLK_FREQ)
+	icetime -d $(TIME_DEVICE) -mtr $@ -c $(CLK_FREQ) $<
 
 %_tb: %_tb.v $(SIMPROJ).v $^ $(PROJ_SOURCE)
 	iverilog -o $@ $^
