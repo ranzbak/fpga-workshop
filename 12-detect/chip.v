@@ -11,15 +11,17 @@ module chip (
   reg reset = 1'b1;
   reg [11:0] reset_count = 4095;
 
-	SB_HFOSC u_hfosc (
-        	.CLKHFPU(1'b1),
-        	.CLKHFEN(1'b1),
-        	.CLKHF(clk)
-    	);
+  SB_HFOSC #(
+    .CLKHF_DIV("0b01")
+  ) u_hfosc (
+    .CLKHFPU(1'b1),
+    .CLKHFEN(1'b1),
+    .CLKHF(clk)
+  );
 
   // Keep the timer high for the first 4096 cycles
   // To let the system stabilize 
-	always @(posedge clk) 
+  always @(posedge clk) 
   begin
     if(reset_count > 0) begin
       reset <= 1'b1;

@@ -1,7 +1,7 @@
 module read_temp #(
     parameter BWD = 32,           // Bus width of the data register
-    parameter CDR_N = 48 * 7 - 1, // Normal mode cycle divider
-    parameter CDR_O = 48 * 1 - 1  // Overdrive mode cycle divider
+    parameter CDR_N = 24 * 7 - 1, // Normal mode cycle divider
+    parameter CDR_O = 24 * 1 - 1  // Overdrive mode cycle divider
   ) (
     input  i_clk,     // Basic IO
     input  i_rst,

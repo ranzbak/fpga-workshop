@@ -1,6 +1,7 @@
 PROJ = chip
 SIMPROJ = simulate
 GTKWAVE_CFG = default.gtkw
+CLK_FREQ = 24 # The frequency in MHz the clock runs at
 
 PIN_DEF = upduino_v2.pcf
 DEVICE = 5k
@@ -23,7 +24,7 @@ test:
 	icepack $< $@
 
 %.rpt: %.asc
-	icetime -d $(TIME_DEVICE) -mtr $@ $<
+	icetime -d $(TIME_DEVICE) -mtr $@ $< -c $(CLK_FREQ)
 
 %_tb: %_tb.v $(SIMPROJ).v $^ $(PROJ_SOURCE)
 	iverilog -o $@ $^
