@@ -37,13 +37,13 @@ module led(input i_clk, input i_rst, output o_led_r, output o_led_g, output o_le
     r_dest_led_r_reg <= r_led_r_reg; 
     r_dest_led_g_var <= r_led_g_var;
   
-    // Set RED and GREEN to off (higt is off)
+    // Set RED and GREEN to off (high is off)
     r_led_r_reg <= 1'b1;
     r_led_g_var = 1'b1;
 
     // After programming for the first time uncomment the two lines below
-    //r_led_r <= r_led_r_reg; 
-    //r_led_g <= r_led_g_var;
+    //r_dest_led_r_reg <= r_led_r_reg; 
+    //r_dest_led_g_var <= r_led_g_var;
   end
 
   // Assign the registers to the output
