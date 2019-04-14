@@ -40,11 +40,10 @@ When the DS18B20 is found the LED turn green, when not found red.
 
   TO92 package
   DS18B20
- +----------+
- |  1  2  3 |
- |          |
- +-+      +-+
-   --------
+ +-----------+
+ |  1  2  3  |
+ |  bottom   |
+  \_________/
  GND  SIG  VCC
 ```
 
