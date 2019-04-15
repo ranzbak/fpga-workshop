@@ -1,6 +1,6 @@
 # FPGA Workshop
 
-Basic FPGA development 
+[Basic FPGA development](docs/Basic%20FPGA%20development.pdf)
 for absolute beginners
 
 ## Sections
