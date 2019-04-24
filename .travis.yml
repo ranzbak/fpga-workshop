@@ -1,0 +1,24 @@
+dist: xenial
+addons:
+  apt:
+    packages:
+    - arachne-pnr
+    - yosys
+    - iverilog
+    - verilator
+    - icestorm
+
+script:
+  - cd 01-hello && make && cd -
+  - cd 02-module && make && cd -
+  - cd 03-blink && make && make sim && cd -
+  - cd 04-parameter && make && make sim && cd -
+  - cd 05-varreg && make && make sim && cd -
+  - cd 06-dim && make && make sim && cd -
+  - cd 07-task && make && make sim && cd -
+  - cd 08-function && make && make sim && cd -
+  - cd 09-case && make && cd -
+  - cd 10-io && make && cd -
+  - cd 11-sim && make && make sim && cd -
+  - cd 12-detect && make && make sim && cd -
+  - cd 13-temp-ds18b20 && make && make sim && cd -
