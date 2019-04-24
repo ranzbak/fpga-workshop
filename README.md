@@ -21,10 +21,20 @@ for absolute beginners
 
 ## Requisites
 
+###Materials
+The hardware for one workshop kit
+* 1x [UPDuino V2.0](http://www.gnarlygrey.com)
+* 2x 12kΩ resistors
+* 1x 4.7kΩ resistor
+* 1x [400 pin breadboard](https://www.ebay.com/itm/400-Points-Solderless-Breadboard-Protoboard-PCB-Test-Tafel/303104250905?hash=item46926bd419:g:0ZIAAOSwQKdclOnX)
+* 6x [breadboard wire (one lot has enough wires for 6 kits)](https://www.ebay.com/itm/65Pcs-Male-to-Male-Solderless-Flexible-Breadboard-Jumper-Cable-Wires-For-Arduino/132335990497?epid=1066101990&hash=item1ecfd6f6e1:g:jbAAAOSwEi1cdQBv)
+* 1x [DS18B20 temperature sensor](https://www.ebay.com/itm/5-10-20-50PCS-DS18B20-TO-92-9-12bit-Temperature-Sensor-Dallas-Thermometer-Sensor/323535934527?epid=2074368262&hash=item4b543e943f:m:mUgBbGl2BpyCl8TGSeZYERA)
+
+###Software
 [dimdm IceTools Github](https://github.com/ddm/icetools)
 
-## Requisites for people wanting to do it hardcore
 
+## Requisites for people wanting to do it hardcore
 
 ### [IceStorm](http://www.clifford.at/icestorm/)
 
