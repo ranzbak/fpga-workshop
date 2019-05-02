@@ -26,13 +26,15 @@ When joining the workshop as a participant make sure to have these things done.
 **Compiling the tool chain takes 35 to 55 minutes, during which you cannot take part in the exorcizes in the workshop.**
 
 * Installed Icestorm toolchain, that supports the Lattice ICE40UP5K FPGA.
-  * [install manual](http://www.clifford.at/icestorm/#install)
-  * [install by script](https://github.com/ddm/icetools)
+  * [Install manually](http://www.clifford.at/icestorm/#install)
+  * [Install by script](https://github.com/ddm/icetools)
   * When you have Ubuntu 19.04 or later, the packages that come with the distro support ICE40UP5K.
+  * For those that forget there will be a Virtual machine, that will suffice during the workshop.
 * A micro USB cable
 * A working laptop that can run the Icestorm toolchain (Linux or OSX should be fine, for Windows I don't know#)
 * 3 to 4 hours of your time, an Saturday the 13th (There will be some breaks)
 * Some basic knowledge about programming and digital circuits
+* A laptop that is capable of running the Icestorm toolchain.
 
 ## Requisites
 
