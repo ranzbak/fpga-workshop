@@ -19,9 +19,25 @@ for absolute beginners
 * [12 Detect](12-detect)
 * [13 DS18B20 Sensor](13-temp-ds18b20)
 
+## Pre-requisites
+
+When joining the workshop as a participant make sure to have these things done.
+
+**Compiling the tool chain takes 35 to 55 minutes, during which you cannot take part in the exorcizes in the workshop.**
+
+* Installed Icestorm toolchain, that supports the Lattice ICE40UP5K FPGA.
+  * [install manual](http://www.clifford.at/icestorm/#install)
+  * [install by script](https://github.com/ddm/icetools)
+  * When you have Ubuntu 19.04 or later, the packages that come with the distro support ICE40UP5K.
+* A micro USB cable
+* A working laptop that can run the Icestorm toolchain (Linux or OSX should be fine, for Windows I don't know#)
+* 3 to 4 hours of your time, an Saturday the 13th (There will be some breaks)
+* Some basic knowledge about programming and digital circuits
+
 ## Requisites
 
 ###Materials
+
 The hardware for one workshop kit
 * 1x [UPDuino V2.0](http://www.gnarlygrey.com)
 * 2x 12kΩ resistors
