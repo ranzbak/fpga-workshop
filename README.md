@@ -36,6 +36,27 @@ When joining the workshop as a participant make sure to have these things done.
 * Some basic knowledge about programming and digital circuits
 * A laptop that is capable of running the Icestorm toolchain.
 
+### Checking the tool chain
+
+A simple check to see if the toolchain supports the 'ICE40UP5K', do:
+
+```bash
+$ arachne-pnr -h
+
+<...>
+    -d <device>, --device <device>
+        Target device <device>.  Supported devices:
+          384 - Lattice Semiconductor iCE40LP384
+           1k - Lattice Semiconductor iCE40LP/HX1K
+           5k - Lattice Semiconductor iCE40UP5K
+         lm4k - Lattice Semiconductor iCE40LM4K
+           8k - Lattice Semiconductor iCE40LP/HX8K
+        Default: 1k
+<...>
+```
+
+When it shows the line **'5k - Lattice Semiconductor iCE40UP5K'** the tool chain supports the UPDuino V2.
+
 ## Requisites
 
 ###Materials
