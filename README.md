@@ -19,9 +19,49 @@ for absolute beginners
 * [12 Detect](12-detect)
 * [13 DS18B20 Sensor](13-temp-ds18b20)
 
+## Pre-requisites
+
+When joining the workshop as a participant make sure to have these things done.
+
+**Compiling the tool chain takes 35 to 55 minutes, during which you cannot take part in the exorcizes in the workshop.**
+
+* Installed Icestorm toolchain, that supports the Lattice ICE40UP5K FPGA.
+  * [Install manually](http://www.clifford.at/icestorm/#install)
+  * [Install by script](https://github.com/ddm/icetools)
+  * When you have Ubuntu 19.04 or later, the packages that come with the distro support ICE40UP5K.
+  * For those that forget there will be a Virtual machine, that will suffice during the workshop.
+* A micro USB cable
+* A working laptop that can run the Icestorm toolchain (Linux or OSX should be fine, for Windows I don't know#)
+* 3 to 4 hours of your time, an Saturday the 13th (There will be some breaks)
+* Some basic knowledge about programming and digital circuits
+* A laptop that is capable of running the Icestorm toolchain.
+
+### Checking the tool chain
+
+A simple check to see if the toolchain supports the 'ICE40UP5K', do:
+
+```bash
+$ arachne-pnr -h
+
+<...>
+    -d <device>, --device <device>
+        Target device <device>.  Supported devices:
+          384 - Lattice Semiconductor iCE40LP384
+           1k - Lattice Semiconductor iCE40LP/HX1K
+           5k - Lattice Semiconductor iCE40UP5K
+         lm4k - Lattice Semiconductor iCE40LM4K
+           8k - Lattice Semiconductor iCE40LP/HX8K
+        Default: 1k
+<...>
+```
+
+When it shows the line **'5k - Lattice Semiconductor iCE40UP5K'** the tool chain supports the UPDuino V2.
+
 ## Requisites
 
 ### Materials
+
+>>>>>>> 2ac802b5203ad203674f9b3dd023597b8781b8d2
 The hardware for one workshop kit
 * 1x [UPDuino V2.0](http://www.gnarlygrey.com)
 * 2x 12kΩ resistors
