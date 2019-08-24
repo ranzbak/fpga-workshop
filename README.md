@@ -28,7 +28,7 @@ When joining the workshop as a participant make sure to have these things done.
 * Installed Icestorm toolchain, that supports the Lattice ICE40UP5K FPGA.
   * [Install manually](http://www.clifford.at/icestorm/#install)
   * [Install by script](https://github.com/ddm/icetools)
-  * Install by packagemanager: `apt-get install arachne-pnr arachne-pnr-chipdb` (on Ubuntu 19.04 or a recent Debian)
+  * Install by packagemanager: `apt-get install arachne-pnr arachne-pnr-chipdb iverilog gtkwave` (on Ubuntu 19.04 or a recent Debian)
   * For those that forget there will be a Virtual machine, that will suffice during the workshop.
 * A micro USB cable
 * A working laptop that can run the Icestorm toolchain (Linux or OSX should be fine, for Windows I don't know#)
