@@ -8,17 +8,17 @@ module chip (
 
   // Internal oscillator
 	SB_HFOSC u_hfosc (
-        	.CLKHFPU(1'b1),
-        	.CLKHFEN(1'b1),
-        	.CLKHF(w_clk)
+          .CLKHFPU(1'b1),
+          .CLKHFEN(1'b1),
+          .CLKHF(w_clk)
  	);
 
 	led my_led (
-		.i_clk(w_clk),
-		.i_rst(0),
-    .o_led_r(w_led_r),
-    .o_led_g(w_led_g),
-    .o_led_b(w_led_b)
+          .i_clk(w_clk),
+          .i_rst(0),
+          .o_led_r(w_led_r),
+          .o_led_g(w_led_g),
+          .o_led_b(w_led_b)
 	);
 
 	assign O_LED_R = w_led_r;
