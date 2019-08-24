@@ -63,8 +63,8 @@ module temp #(
     .CDR_E(1),
     .OVD_E(0)
     ) my_onewire (
-		.clk(i_clk),
-		.rst(i_rst),
+    .clk(i_clk),
+    .rst(i_rst),
     .bus_ren(r_bus_ren),
     .bus_wen(r_bus_wen),
     .bus_adr(r_bus_adr),
@@ -74,7 +74,7 @@ module temp #(
     .owr_p(w_owr_p), // not used
     .owr_e(o_owr),
     .owr_i(i_owr)
-	);
+  );
   // Setup module clock divider for 48 MHz 
   // defparam my_onewire.CDR_N = CDR_N;  // CDR_N = f_CLK * BTP_N - 1
   // defparam my_onewire.CDR_O = CDR_O;  // CDR_O = f_CLK * BTP_O - 1
@@ -96,7 +96,7 @@ module temp #(
     fail          = 99; // triggered when something went wrong
 
   // always at clock pulse
-	always @(posedge i_clk)
+  always @(posedge i_clk)
   begin
     // Zero registers by default
     r_bus_ren <= 1'b0;

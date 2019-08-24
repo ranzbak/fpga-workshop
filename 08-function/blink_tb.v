@@ -9,7 +9,7 @@ module testbench;
 
 
   // Instanciate the module
-	blink #(
+  blink #(
     .p_bit_r(9),
     .p_bit_g(10),
     .p_bit_b(11),

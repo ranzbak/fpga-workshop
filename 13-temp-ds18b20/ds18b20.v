@@ -105,8 +105,8 @@ module ds18b20 #(
     .CDR_E(1),
     .OVD_E(0)
     ) my_sockit_owm (
-		.clk(i_clk),
-		.rst(i_rst),
+    .clk(i_clk),
+    .rst(i_rst),
     .bus_ren(bus_ren),
     .bus_wen(bus_wen),
     .bus_adr(bus_adr),
@@ -116,7 +116,7 @@ module ds18b20 #(
     .owr_p(o_owr_p),
     .owr_e(o_owr),
     .owr_i(i_owr)
-	);
+  );
 
   // Command enumeration
   parameter

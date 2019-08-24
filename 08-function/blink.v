@@ -23,7 +23,7 @@ module blink(input i_clk, input i_rst, output o_led_r, output o_led_g, output o_
   parameter p_bit_dev=16;
 
   // Count register
-	reg [25:0] r_count;
+  reg [25:0] r_count;
 
   // Dim the LED
   function f_dim;
@@ -45,7 +45,7 @@ module blink(input i_clk, input i_rst, output o_led_r, output o_led_g, output o_
   assign o_led_b = f_dim(r_count[p_bit_b]);
 
   // always at clock pulse
-	always @(posedge i_clk)
+  always @(posedge i_clk)
   begin
     if(i_rst)
     begin
