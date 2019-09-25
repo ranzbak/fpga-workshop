@@ -7,7 +7,7 @@ module morse (
   );
 
   // State machine
-	reg [25:0] count = 0;
+  reg [25:0] count = 0;
   reg [6:0] morse_state = 0;
 
   // LED output registers
@@ -88,7 +88,7 @@ module morse (
   assign led_b = led_b_reg;
 
   // always at clock pulse
-	always @(posedge clk)
+  always @(posedge clk)
   begin
     if (rst == 1'b0) begin
       // Reset state

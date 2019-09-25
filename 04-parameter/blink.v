@@ -20,15 +20,15 @@ module blink(input i_clk, input i_rst, output o_led_r, output o_led_g, output o_
   parameter p_bit_b=23;
 
   // Counter register
-	reg [25:0] r_count;
+  reg [25:0] r_count;
   
   // Permanent assignments
-	assign o_led_r = r_count[p_bit_r];
+  assign o_led_r = r_count[p_bit_r];
   assign o_led_g = r_count[p_bit_g];
   assign o_led_b = r_count[p_bit_b];
 
   // always at clock pulse
-	always @(posedge i_clk)
+  always @(posedge i_clk)
   begin
     if(i_rst)
     begin
