@@ -21,7 +21,7 @@ module morse (
   output o_led_b
   );
 
-	reg [$clog2('hffffff)-1:0] r_count = 0;
+  reg [$clog2('hffffff)-1:0] r_count = 0;
   reg [6:0]  r_morse_state = 0;
   reg        r_led_r = 0;
   reg        r_led_g = 0;
@@ -100,7 +100,7 @@ module morse (
   assign o_led_b = r_led_b;
   
   // always at clock pulse
-	always @(posedge i_clk)
+  always @(posedge i_clk)
   begin
     if (i_rst == 1'b1) begin
       // Reset state
