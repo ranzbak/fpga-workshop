@@ -1,12 +1,12 @@
 
 module chip (
-	output	O_LED_R,
-	output	O_LED_G,
-	output	O_LED_B,
+  output  O_LED_R,
+  output  O_LED_G,
+  output  O_LED_B,
   input   I_INPUT_1
-	);
+  );
 
-	wire w_clk;
+  wire w_clk;
   reg r_rst;
 
   // Cycle speeds of the RGB colors (All primes)
@@ -25,28 +25,28 @@ module chip (
     );
 
   // RED
-	cycle red_cycle (
-		.i_clk(w_clk),
-		.i_rst(r_rst),
+  cycle red_cycle (
+    .i_clk(w_clk),
+    .i_rst(r_rst),
     .i_speed(p_speed_r),
     .o_led(O_LED_R)
-	);
+  );
 
   // GREEN
-	cycle green_cycle (
-		.i_clk(w_clk),
-		.i_rst(r_rst),
+  cycle green_cycle (
+    .i_clk(w_clk),
+    .i_rst(r_rst),
     .i_speed(p_speed_g),
     .o_led(O_LED_G)
-	);
+  );
 
   // BLUE
-	cycle blue_cycle (
-		.i_clk(w_clk),
-		.i_rst(r_rst),
+  cycle blue_cycle (
+    .i_clk(w_clk),
+    .i_rst(r_rst),
     .i_speed(p_speed_b),
     .o_led(O_LED_B)
-	);
+  );
 
   assign r_rst = I_INPUT_1;
 

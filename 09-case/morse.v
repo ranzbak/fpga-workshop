@@ -21,7 +21,7 @@ module morse (
   output o_led_b
   );
 
-	reg [25:0] r_count = 0;
+  reg [25:0] r_count = 0;
   reg [6:0]  r_morse_state = 0;
   reg        r_led_r = 0;
   reg        r_led_g = 0;
@@ -100,7 +100,7 @@ module morse (
   assign o_led_b = r_led_b;
   
   // always at clock pulse
-	always @(posedge i_clk)
+  always @(posedge i_clk)
   begin
     r_count <= r_count + 1;
     r_led_g <= 1'b1;

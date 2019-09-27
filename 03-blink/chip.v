@@ -1,11 +1,11 @@
 
 module chip (
-	output	LED_R,
-	output	LED_G,
-	output	LED_B
-	);
+  output  LED_R,
+  output  LED_G,
+  output  LED_B
+  );
 
-	wire clk, led_r, led_g, led_b;
+  wire clk, led_r, led_g, led_b;
 
   SB_HFOSC #(
     .CLKHF_DIV("0b00")
@@ -15,16 +15,16 @@ module chip (
       .CLKHF(clk)
     );
 
-	blink my_blink (
-		.clk(clk),
-		.rst(0),
-    		.led_r(led_r),
-    		.led_g(led_g),
-    		.led_b(led_b)
-	);
+  blink my_blink (
+    .clk(clk),
+    .rst(0),
+        .led_r(led_r),
+        .led_g(led_g),
+        .led_b(led_b)
+  );
 
-	assign LED_R = led_r;
-	assign LED_G = led_g;
-	assign LED_B = led_b;
+  assign LED_R = led_r;
+  assign LED_G = led_g;
+  assign LED_B = led_b;
 
 endmodule

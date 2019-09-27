@@ -8,11 +8,11 @@ module simulate (
 );
 
   // RED
-	cycle simulate_cycle (
-		.i_clk(i_clk),
-		.i_rst(i_rst),
+  cycle simulate_cycle (
+    .i_clk(i_clk),
+    .i_rst(i_rst),
     .i_speed(i_speed),
- 		.o_led(o_led)
-	);
+     .o_led(o_led)
+  );
 
 endmodule

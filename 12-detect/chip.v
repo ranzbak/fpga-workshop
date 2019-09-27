@@ -1,12 +1,12 @@
 module chip (
   input   I_RESET_WIRE,
-	output	O_LED_R,
-	output	O_LED_G,
-	output	O_LED_B,
+  output  O_LED_R,
+  output  O_LED_G,
+  output  O_LED_B,
   inout   IO_ONE_WIRE
-	);
+  );
 
-	wire clk, led_r, led_g, led_b, one_wire, owr_in, owr_out;
+  wire clk, led_r, led_g, led_b, one_wire, owr_in, owr_out;
 
   reg reset = 1'b1;
   reg [11:0] reset_count = 4095;
@@ -36,7 +36,7 @@ module chip (
   end
 
   // Temperature sensor
-	temp my_temp (
+  temp my_temp (
     .i_clk(clk),
     .i_rst(reset),
     .o_led_r(led_r),
@@ -58,9 +58,9 @@ module chip (
   );
 
   // Connect up the registers to the LED wires
-	assign O_LED_R = led_r;
-	assign O_LED_G = led_g;
-	assign O_LED_B = led_b;
+  assign O_LED_R = led_r;
+  assign O_LED_G = led_g;
+  assign O_LED_B = led_b;
 
 
 endmodule

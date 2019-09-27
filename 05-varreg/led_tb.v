@@ -9,7 +9,7 @@ module testbench;
 
 
   // Instanciate the module
-	led uut (
+  led uut (
     .i_clk(r_clk),
     .i_rst(r_rst),
     .o_led_r(w_led_r),
