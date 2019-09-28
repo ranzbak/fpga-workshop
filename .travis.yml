@@ -1,6 +1,7 @@
 addons:
   apt:
     packages:
+    - gperf
     - libftdi-dev
 
 install:
