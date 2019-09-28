@@ -61,7 +61,6 @@ When it shows the line **'5k - Lattice Semiconductor iCE40UP5K'** the tool chain
 
 ### Materials
 
->>>>>>> 2ac802b5203ad203674f9b3dd023597b8781b8d2
 The hardware for one workshop kit
 * 1x [UPDuino V2.0](http://www.gnarlygrey.com)
 * 2x 12kΩ resistors
