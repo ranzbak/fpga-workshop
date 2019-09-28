@@ -1,16 +1,16 @@
-dist: bionic
 addons:
   apt:
     packages:
     - arachne-pnr
     - iverilog
     - verilator
+    - icestorm
 
 install:
   - git clone https://github.com/cliffordwolf/yosys.git yosys
   - cd yosys
   - make -j$(nproc)
-  - make install
+  - sudo make install
   - cd -
 
 script:
