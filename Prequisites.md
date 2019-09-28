@@ -63,9 +63,7 @@ For example [09](/09-sim) you'll need to install Icarus Verilog and GTKWave
 ```
 git clone git://github.com/steveicarus/iverilog.git iverilog
 cd iverilog
-aclocal
-autoconf
-automake
+sh autoconf.sh
 ./configure
 make -j$(nproc)
 sudo make install
