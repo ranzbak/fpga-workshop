@@ -1,12 +1,12 @@
 
 module chip (
   input   I_USER_1,
-	output	O_LED_R,
-	output	O_LED_G,
-	output	O_LED_B
-	);
+  output  O_LED_R,
+  output  O_LED_G,
+  output  O_LED_B
+  );
 
-	wire w_clk;
+  wire w_clk;
 
   // Clock devided to 24 MHz
   SB_HFOSC u_hfosc (

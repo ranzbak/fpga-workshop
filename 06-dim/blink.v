@@ -24,18 +24,18 @@ module blink(input i_clk, input i_rst, output o_led_r, output o_led_g, output o_
   // Dim bits bit 16 around (800Hz)
   parameter p_bit_d     = 16;
 
-	reg [p_bit_count:0] r_count;
+  reg [p_bit_count:0] r_count;
   
   // Permanent assignments
   // RED LED by default pick bit 25 (0.7 seconds)
-	assign o_led_r = r_count[r_bit_r] || r_count[p_bit_d] || r_count[p_bit_d-1] || r_count[p_bit_d-2] || r_count[p_bit_d-3];
+  assign o_led_r = r_count[r_bit_r] || r_count[p_bit_d] || r_count[p_bit_d-1] || r_count[p_bit_d-2] || r_count[p_bit_d-3];
   // GREEN LED by default pick bit 24 (0.35 seconds)
   assign o_led_g = r_count[r_bit_g] || r_count[p_bit_d] || r_count[p_bit_d-1] || r_count[p_bit_d-2] || r_count[p_bit_d-3];
   // BLUE LED by default pick bit 23 (0.13 secounds)
   assign o_led_b = r_count[r_bit_b] || r_count[p_bit_d] || r_count[p_bit_d-1] || r_count[p_bit_d-2] || r_count[p_bit_d-3];
 
   // always at clock pulse
-	always @(posedge i_clk)
+  always @(posedge i_clk)
   begin
     if(i_rst) begin
       // Hold to zero during reset

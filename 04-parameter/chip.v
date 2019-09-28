@@ -1,8 +1,8 @@
 
 module chip (
-  output	O_LED_R,
-  output	O_LED_G,
-  output	O_LED_B
+  output  O_LED_R,
+  output  O_LED_G,
+  output  O_LED_B
 );
 
 wire w_clk, w_led_r, w_led_g, w_led_b;
