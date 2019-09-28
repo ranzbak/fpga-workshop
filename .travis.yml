@@ -6,7 +6,6 @@ addons:
     - yosys
     - iverilog
     - verilator
-    - icestorm
 
 script:
   - cd 01-hello
