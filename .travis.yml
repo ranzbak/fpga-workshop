@@ -3,6 +3,7 @@ addons:
     packages:
     - iverilog
     - verilator
+    - libftdi-dev
 
 install:
   - git clone https://github.com/cliffordwolf/icestorm.git icestorm
