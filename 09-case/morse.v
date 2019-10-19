@@ -43,7 +43,7 @@ module morse (
 
   endtask
 
-  // This Task is called to show a dash
+  // This Task is called to show a did
   task t_morse_did;
     output o_led_morse;
     
@@ -67,7 +67,7 @@ module morse (
     end
   endtask
 
-  // This Task is called to show a dash
+  // This Task is called to show a rest
   task t_morse_rest;
     reg r_bogus;
 
