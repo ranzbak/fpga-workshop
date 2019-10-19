@@ -128,7 +128,6 @@ module morse (
           r_morse_state <= o_1_0;
       end
       o_1_0 : begin
-        r_led_b <= 1'b1;
         t_morse_dash(r_led_r);
         if(r_count == 26'h0)
           r_morse_state <= o_1_1;
