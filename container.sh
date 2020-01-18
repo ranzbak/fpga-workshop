@@ -9,6 +9,6 @@ docker run --rm -t -i \
 	-v /dev/serial:/dev/serial \
 	-v $(pwd):/app \
 	--workdir /app \
-	link0/fpga \
+	link0/icestorm \
 	bash \
 ;
