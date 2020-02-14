@@ -15,7 +15,7 @@ test:
 	echo $(PROJ_SOURCE)
 
 %.blif: %.v $(SIMPROJ).v $(PROJ_SOURCE)
-	yosys -p 'synth_ice40 -top chip -blif $@; tribuf -logic' $^
+	yosys -p 'proc; opt; synth_ice40 -top chip -blif $@; tribuf -logic' $^
 
 %.asc: $(PIN_DEF) %.blif
 	arachne-pnr -d $(subst hx,,$(subst lp,,$(DEVICE))) -o $@ -p $^
@@ -51,10 +51,10 @@ flash: $(PROJ).bin
 
 clean:
 	# Remove the synthesis files
-	rm -f $(SIMPROJ).blif $(SIMPROJ).asc $(SIMPROJ).rpt $(SIMPROJ).bin 
-	rm -f $(PROJ).blif $(PROJ).asc $(PROJ).rpt $(PROJ).bin $(PROJ).txt
+	$(RM) $(SIMPROJ).blif $(SIMPROJ).asc $(SIMPROJ).rpt $(SIMPROJ).bin
+	$(RM) $(PROJ).blif $(PROJ).asc $(PROJ).rpt $(PROJ).bin $(PROJ).txt
 	# Removing the simulation files
-	rm -f $(SIMPROJ)_syntb $(SIMPROJ)_syntb.vcd $(SIMPROJ)_tb.vcd $(SIMPROJ)_tb
+	$(RM) $(SIMPROJ)_syntb $(SIMPROJ)_syntb.vcd $(SIMPROJ)_tb.vcd $(SIMPROJ)_tb
 
 .SECONDARY:
 .PHONY: all flash clean sim test gtkwave

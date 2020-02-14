@@ -8,8 +8,8 @@ FPGA_CLOCK=50
 all: chip.bin
 
 # Use Yosys to create an object file
-chip.blif: chip.v led.v
-	yosys -q -p "read_verilog -noautowire $^ ; hierarchy ; proc ; check ; fsm; opt ; clean ; synth_ice40 -blif $@"
+chip.blif: chip.v blink.v
+	yosys -q -p "read_verilog -noautowire $^ ; hierarchy ; proc ; opt ; check ; fsm; opt ; clean ; opt ; synth_ice40 -blif $@"
 
 # Use the object file + the constraint file to create bit field file
 %.txt: %.blif upduino_v2.pcf

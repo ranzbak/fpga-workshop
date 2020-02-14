@@ -46,10 +46,10 @@ flash: $(PROJ).bin
 
 clean:
 	# Remove the synthesis files
-	rm -f $(SIMPROJ).blif $(SIMPROJ).asc $(SIMPROJ).rpt $(SIMPROJ).bin 
-	rm -f $(PROJ).blif $(PROJ).asc $(PROJ).rpt $(PROJ).bin 
+	$(RM) -f $(SIMPROJ).blif $(SIMPROJ).asc $(SIMPROJ).rpt $(SIMPROJ).bin
+	$(RM) -f $(PROJ).blif $(PROJ).asc $(PROJ).rpt $(PROJ).bin
 	# Removing the simulation files
-	rm -f $(SIMPROJ)_syntb $(SIMPROJ)_syntb.vcd $(SIMPROJ)_tb.vcd $(SIMPROJ)_tb $(SIMPROJ)_syn.v
+	$(RM) -f $(SIMPROJ)_syntb $(SIMPROJ)_syntb.vcd $(SIMPROJ)_tb.vcd $(SIMPROJ)_tb $(SIMPROJ)_syn.v
 
 .SECONDARY:
 .PHONY: all flash clean sim

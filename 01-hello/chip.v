@@ -1,3 +1,5 @@
+`default_nettype none
+
 // Example 01 Hello world
 module chip (
   output  O_LED_R

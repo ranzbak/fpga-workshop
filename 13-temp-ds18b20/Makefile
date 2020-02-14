@@ -24,7 +24,7 @@ test:
 	icepack $< $@
 
 %.rpt: %.asc
-	icetime -d $(TIME_DEVICE) -mtr $@ -c $(CLK_FREQ) $< 
+	icetime -d $(TIME_DEVICE) -mtr $@ -c $(CLK_FREQ) $<
 
 %_tb: %_tb.v $(SIMPROJ).v $^ $(PROJ_SOURCE)
 	iverilog -o $@ $^
@@ -51,10 +51,10 @@ flash: $(PROJ).bin
 
 clean:
 	# Remove the synthesis files
-	rm -f $(SIMPROJ).blif $(SIMPROJ).asc $(SIMPROJ).rpt $(SIMPROJ).bin 
-	rm -f $(PROJ).blif $(PROJ).asc $(PROJ).rpt $(PROJ).bin 
+	$(RM) $(SIMPROJ).blif $(SIMPROJ).asc $(SIMPROJ).rpt $(SIMPROJ).bin
+	$(RM) $(PROJ).blif $(PROJ).asc $(PROJ).rpt $(PROJ).bin
 	# Removing the simulation files
-	rm -f $(SIMPROJ)_syntb $(SIMPROJ)_syntb.vcd $(SIMPROJ)_tb.vcd $(SIMPROJ)_tb
+	$(RM) $(SIMPROJ)_syntb $(SIMPROJ)_syntb.vcd $(SIMPROJ)_tb.vcd $(SIMPROJ)_tb
 
 .SECONDARY:
 .PHONY: all flash clean sim test gtkwave

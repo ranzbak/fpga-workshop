@@ -10,7 +10,7 @@ PROJ_SOURCE = $(shell ls -1 *.v | egrep -v '($(SIMPROJ)|$(PROJ))' )
 all: $(PROJ).rpt $(PROJ).bin
 
 %.blif: %.v $(SIMPROJ).v $(PROJ_SOURCE)
-	yosys -p 'synth_ice40 -top chip -blif $@; tribuf -logic' $^
+	yosys -p 'read_verilog -noautowire $^; tribuf; hierarchy; opt; proc; opt; fsm; opt; clean; synth_ice40 -top chip -blif $@; tribuf -logic'
 
 %.asc: $(PIN_DEF) %.blif
 	arachne-pnr -d $(subst hx,,$(subst lp,,$(DEVICE))) -o $@ -p $^
@@ -46,10 +46,10 @@ flash: $(PROJ).bin
 
 clean:
 	# Remove the synthesis files
-	rm -f $(SIMPROJ).blif $(SIMPROJ).asc $(SIMPROJ).rpt $(SIMPROJ).bin 
-	rm -f $(PROJ).blif $(PROJ).asc $(PROJ).rpt $(PROJ).bin 
+	$(RM) $(SIMPROJ).blif $(SIMPROJ).asc $(SIMPROJ).rpt $(SIMPROJ).bin
+	$(RM) $(PROJ).blif $(PROJ).asc $(PROJ).rpt $(PROJ).bin
 	# Removing the simulation files
-	rm -f $(SIMPROJ)_syntb $(SIMPROJ)_syntb.vcd $(SIMPROJ)_tb.vcd $(SIMPROJ)_tb $(SIMPROJ)_syn.v
+	$(RM) $(SIMPROJ)_syntb $(SIMPROJ)_syntb.vcd $(SIMPROJ)_tb.vcd $(SIMPROJ)_tb $(SIMPROJ)_syn.v
 
 .SECONDARY:
 .PHONY: all flash clean sim
