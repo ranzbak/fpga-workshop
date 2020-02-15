@@ -75,6 +75,8 @@ The hardware for one workshop kit
 
 ## Requisites for people wanting to do it hardcore
 
+`sudo apt install libeigen3-dev libftdi-dev libboost-all-dev`
+
 ### [IceStorm](http://www.clifford.at/icestorm/)
 
 ```
