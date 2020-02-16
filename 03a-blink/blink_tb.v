@@ -36,8 +36,8 @@ module testbench;
 
   initial begin
     repeat (1000) @(posedge clk);
-    if( uut.count == 0 ) begin
-      $display("%0t: %d", $time, uut.count);
+    if( uut.count0 == 0 ) begin
+      $display("%0t: %d", $time, uut.count0);
       $stop;
     end
   end

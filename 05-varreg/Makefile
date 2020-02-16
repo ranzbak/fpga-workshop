@@ -1,5 +1,5 @@
 # Name of the simulation project
-SIMPROJ = blink
+SIMPROJ = led
 
 # Design Clock in (MHz)
 FPGA_CLOCK=50
