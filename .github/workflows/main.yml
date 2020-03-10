@@ -24,7 +24,7 @@ jobs:
 
     # Runs a single command using the runners shell
     - name: Install dependencies
-      run: sudo apt-get update && sudo apt-get install -y arachne-pnr arachne-pnr-chipdb build-essential fpga-icestorm fpga-icestorm-chipdb libftdi-dev
+      run: sudo apt-get update && sudo apt-get install -y arachne-pnr arachne-pnr-chipdb build-essential fpga-icestorm fpga-icestorm-chipdb libftdi-dev libboost-all-dev
 
     - name: Compile latest IceStorm
       run: |
