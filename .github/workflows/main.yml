@@ -43,8 +43,104 @@ jobs:
         cd -
 
     # Runs a set of commands using the runners shell
-    - name: Make the first 
+    - name: Make 01-hello
       run: |
         cd 01-hello
         make
+        cd -
+
+    - name: Make 02-module
+      run: |
+        cd 02-module
+        make
+        cd -
+
+    - name: Make 03-blink
+      run: |
+        cd 03-blink
+        make
+        make sim
+        cd -
+    - name: Make 03a-blink
+      run: |
+        cd 03a-blink
+        make
+        make sim
+        cd -
+
+    - name: Make 04-parameter
+      run: |
+        cd 04-parameter
+        make
+        make sim
+        cd -
+
+    - name: Make 05-varreg
+      run: |
+        cd 05-varreg
+        make
+        make sim
+        cd -
+
+    - name: Make 06-dim
+      run: |
+        cd 06-dim
+        make
+        make sim
+        cd -
+
+    - name: Make 07-task
+      run: |
+        cd 07-task
+        make
+        make sim
+        cd -
+
+    - name: Make 08-function
+      run: |
+        cd 08-function
+        make
+        make sim
+        cd -
+
+    - name: Make 09-case
+      run: |
+        cd 09-case
+        make
+        make sim
+        cd -
+
+    - name: Make 10-io
+      run: |
+        cd 10-io
+        make
+        make sim
+        cd -
+
+    - name: Make 11-sim
+      run: |
+        cd 11-sim
+        make
+        make sim
+        cd -
+
+    - name: Make 12-detect
+      run: |
+        cd 12-detect
+        make
+        make sim
+        cd -
+
+    - name: Make 13-temp-ds18b20
+      run: |
+        cd 13-temp-ds18b20
+        make
+        make sim
+        cd -
+
+    - name: Make 14-smooth-fade
+      run: |
+        cd 14-smooth-fade
+        make
+        make sim
         cd -

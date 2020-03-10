@@ -44,6 +44,9 @@ gtkwave: $(SIMPROJ)_tb.vcd default.gtkw
 flash: $(PROJ).bin
 	iceprog $<
 
+show: chip.blif
+	yosys -p "synth_ice40; show" chip.blif
+
 clean:
 	# Remove the synthesis files
 	$(RM) -f $(SIMPROJ).blif $(SIMPROJ).asc $(SIMPROJ).rpt $(SIMPROJ).bin
