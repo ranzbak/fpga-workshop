@@ -26,7 +26,15 @@ jobs:
     - name: Install dependencies
       run: sudo apt-get update && sudo apt-get install -y arachne-pnr arachne-pnr-chipdb build-essential fpga-icestorm fpga-icestorm-chipdb
 
-    - name: Get latest arachne-pnr
+    - name: Compile latest icestorm
+      run: |
+        git clone https://github.com/cliffordwolf/icestorm.git icestorm
+        cd icestorm
+        make -j$(nproc)
+        sudo make install
+        cd -
+
+    - name: Compile latest arachne-pnr
       run: |
         git clone https://github.com/cseed/arachne-pnr.git arachne-pnr
         cd arachne-pnr
