@@ -1,0 +1,176 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. Triggers the workflow on push or pull request 
+# events but only for the master branch
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+    # Runs a single command using the runners shell
+    - name: Install dependencies
+      run: sudo apt-get update && sudo apt-get install -y arachne-pnr arachne-pnr-chipdb build-essential fpga-icestorm fpga-icestorm-chipdb libftdi-dev libboost-all-dev libeigen3-dev tcl-dev libreadline-dev bison flex gperf
+
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2
+
+    - name: Compile latest IceStorm
+      run: |
+        git clone https://github.com/cliffordwolf/icestorm.git icestorm
+        cd icestorm
+        make -j$(nproc)
+        sudo make install
+        cd -
+
+    - name: Compile latest Arachne-PNR
+      run: |
+        git clone https://github.com/cseed/arachne-pnr.git arachne-pnr
+        cd arachne-pnr
+        make -j$(nproc)
+        sudo make install
+        cd -
+
+    - name: Compile latest Next-PNR
+      run: |
+        git clone https://github.com/YosysHQ/nextpnr nextpnr
+        cd nextpnr
+        cmake -DARCH=ice40 -DCMAKE_INSTALL_PREFIX=/usr/local .
+        make -j$(nproc)
+        sudo make install
+        cd -
+
+    - name: Compile the latest Yosys
+      run: |
+        git clone https://github.com/cliffordwolf/yosys.git yosys
+        cd yosys
+        make -j$(nproc)
+        sudo make install
+        cd -
+
+    - name: Compile the latest Icarus Verilog
+      run: |
+        git clone git://github.com/steveicarus/iverilog.git iverilog
+        cd iverilog
+        sh autoconf.sh
+        ./configure
+        make -j$(nproc)
+        sudo make install
+        cd -
+
+    # Runs a set of commands using the runners shell
+    - name: Make 01-hello
+      run: |
+        cd 01-hello
+        make
+        cd -
+
+    - name: Make 02-module
+      run: |
+        cd 02-module
+        make
+        cd -
+
+    - name: Make 03-blink
+      run: |
+        cd 03-blink
+        make
+        make sim
+        cd -
+    - name: Make 03a-blink
+      run: |
+        cd 03a-blink
+        make
+        make sim
+        cd -
+
+    - name: Make 04-parameter
+      run: |
+        cd 04-parameter
+        make
+        make sim
+        cd -
+
+    - name: Make 05-varreg
+      run: |
+        cd 05-varreg
+        make
+        make sim
+        cd -
+
+    - name: Make 06-dim
+      run: |
+        cd 06-dim
+        make
+        make sim
+        cd -
+
+    - name: Make 07-task
+      run: |
+        cd 07-task
+        make
+        make sim
+        cd -
+
+    - name: Make 08-function
+      run: |
+        cd 08-function
+        make
+        make sim
+        cd -
+
+    - name: Make 09-case
+      run: |
+        cd 09-case
+        make
+        make sim
+        cd -
+
+    - name: Make 10-io
+      run: |
+        cd 10-io
+        make
+        make sim
+        cd -
+
+    - name: Make 11-sim
+      run: |
+        cd 11-sim
+        make
+        make sim
+        cd -
+
+    - name: Make 12-detect
+      run: |
+        cd 12-detect
+        make
+        make sim
+        cd -
+
+    - name: Make 13-temp-ds18b20
+      run: |
+        cd 13-temp-ds18b20
+        make
+        make sim
+        cd -
+
+    - name: Make 14-smooth-fade
+      run: |
+        cd 14-smooth-fade
+        make
+        make sim
+        cd -

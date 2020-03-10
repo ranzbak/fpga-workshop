@@ -8,7 +8,7 @@ chip.blif: chip.v morse.v
 # Use the object file + the constraint file to create bit field file
 %.txt: %.blif upduino_v2.pcf
 	arachne-pnr -d 5k -P sg48 -p $(word 2,$^) $< -o $@
-	if ! icetime -d up5k $@ -p $(word 2,$^) ; then $(RM)$@ ; fi
+	if ! icetime -d up5k -p $(word 2,$^) $@ ; then $(RM) $@ ; fi
 
 # Pack the bit field file in a format that can be programmed into the FPGA
 %.bin: %.txt
@@ -17,8 +17,7 @@ chip.blif: chip.v morse.v
 # Show the logical schema of the contained in the object file
 # This is the input for ArachnaPNR
 show: chip.blif
-	#yosys -q -p "hierarchy ; proc ; clean ; opt; synth_ice40; show -format ps -viewer xdg-open" $^
-	yosys -q -p "show -format ps -viewer xdg-open" $^
+	yosys -p "synth_ice40; show" chip.blif
 
 # Check in the design can reach
 
@@ -52,4 +51,4 @@ clean:
 	$(RM) $(SIMPROJ)_syntb $(SIMPROJ)_syntb.vcd $(SIMPROJ)_tb.vcd $(SIMPROJ)_tb
 
 .SECONDARY:
-.PHONY: flash clean all show
+.PHONY: flash sim clean all show

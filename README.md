@@ -8,6 +8,7 @@ for absolute beginners
 * [01 Hello](01-hello)
 * [02 Module](02-module)
 * [03 Blink](03-blink)
+* [03a Blink](03a-blink)
 * [04 Parameters](04-parameter)
 * [05 Variables and Registers](05-varreg)
 * [06 Dimming](06-dim)
@@ -18,6 +19,7 @@ for absolute beginners
 * [11 Simulation](11-sim)
 * [12 Detect](12-detect)
 * [13 DS18B20 Sensor](13-temp-ds18b20)
+* [13 Smooth fading](14-smooth-fade)
 
 ## Pre-requisites
 
@@ -116,16 +118,14 @@ sudo make install
 
 ## Simulation
 
-For example [09](/09-sim) you'll need to install Icarus Verilog and GTKWave
+For example [11](/11-sim) you'll need to install Icarus Verilog and GTKWave
 
 ### [Icarus Verilog](http://iverilog.icarus.com/)
 
 ```
 git clone git://github.com/steveicarus/iverilog.git iverilog
 cd iverilog
-aclocal
-autoconf
-automake
+sh autoconf.sh
 ./configure
 make -j$(nproc)
 sudo make install
