@@ -51,4 +51,4 @@ clean:
 	$(RM) $(SIMPROJ)_syntb $(SIMPROJ)_syntb.vcd $(SIMPROJ)_tb.vcd $(SIMPROJ)_tb
 
 .SECONDARY:
-.PHONY: flash clean all show
+.PHONY: flash sim clean all show
