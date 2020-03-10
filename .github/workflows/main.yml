@@ -26,6 +26,9 @@ jobs:
     - name: Install dependencies
       run: sudo apt-get update && sudo apt-get install -y arachne-pnr arachne-pnr-chipdb build-essential fpga-icestorm fpga-icestorm-chipdb libftdi-dev libboost-all-dev
 
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2
+
     - name: Compile latest IceStorm
       run: |
         git clone https://github.com/cliffordwolf/icestorm.git icestorm
