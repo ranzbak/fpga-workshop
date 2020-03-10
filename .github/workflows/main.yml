@@ -26,7 +26,7 @@ jobs:
     - name: Install dependencies
       run: sudo apt-get update && sudo apt-get install -y arachne-pnr arachne-pnr-chipdb build-essential fpga-icestorm fpga-icestorm-chipdb libftdi-dev
 
-    - name: Compile latest icestorm
+    - name: Compile latest IceStorm
       run: |
         git clone https://github.com/cliffordwolf/icestorm.git icestorm
         cd icestorm
@@ -34,10 +34,39 @@ jobs:
         sudo make install
         cd -
 
-    - name: Compile latest arachne-pnr
+    - name: Compile latest Arachne-PNR
       run: |
         git clone https://github.com/cseed/arachne-pnr.git arachne-pnr
         cd arachne-pnr
+        make -j$(nproc)
+        sudo make install
+        cd -
+
+    - name: Compile latest Next-PNR
+      run: |
+        git clone https://github.com/YosysHQ/nextpnr nextpnr
+        cd nextpnr
+        cmake -DARCH=ice40 -DCMAKE_INSTALL_PREFIX=/usr/local .
+        make -j$(nproc)
+        sudo make install
+        cd -
+
+    - name: Compile the latest Yosys
+      run: |
+        git clone https://github.com/cliffordwolf/yosys.git yosys
+        cd yosys
+        make -j$(nproc)
+        sudo make install
+        cd -
+
+    - name: Compile the latest Icarus Verilog
+      run: |
+        git clone git://github.com/steveicarus/iverilog.git iverilog
+        cd iverilog
+        aclocal
+        autoconf
+        automake
+        ./configure
         make -j$(nproc)
         sudo make install
         cd -
