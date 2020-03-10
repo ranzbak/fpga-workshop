@@ -24,7 +24,7 @@ jobs:
 
     # Runs a single command using the runners shell
     - name: Install dependencies
-      run: apt-get update && apt-get install -y arachne-pnr arachne-pnr-chipdb build-essential fpga-icestorm fpga-icestorm-chipdb
+      run: sudo apt-get update && sudo apt-get install -y arachne-pnr arachne-pnr-chipdb build-essential fpga-icestorm fpga-icestorm-chipdb
 
     # Runs a set of commands using the runners shell
     - name: Make the first 
