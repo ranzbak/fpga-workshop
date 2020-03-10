@@ -61,7 +61,7 @@ When it shows the line **'5k - Lattice Semiconductor iCE40UP5K'** the tool chain
 
 ## Requisites
 
-###Materials
+### Materials
 
 The hardware for one workshop kit
 * 1x [UPDuino V2.0](http://www.gnarlygrey.com)
@@ -71,7 +71,7 @@ The hardware for one workshop kit
 * 6x [breadboard wire (one lot has enough wires for 6 kits)](https://www.ebay.com/itm/65Pcs-Male-to-Male-Solderless-Flexible-Breadboard-Jumper-Cable-Wires-For-Arduino/132335990497?epid=1066101990&hash=item1ecfd6f6e1:g:jbAAAOSwEi1cdQBv)
 * 1x [DS18B20 temperature sensor](https://www.ebay.com/itm/5-10-20-50PCS-DS18B20-TO-92-9-12bit-Temperature-Sensor-Dallas-Thermometer-Sensor/323535934527?epid=2074368262&hash=item4b543e943f:m:mUgBbGl2BpyCl8TGSeZYERA)
 
-###Software
+### Software
 [dimdm IceTools Github](https://github.com/ddm/icetools)
 
 
