@@ -24,7 +24,7 @@ jobs:
 
     # Runs a single command using the runners shell
     - name: Install dependencies
-      run: sudo apt-get update && sudo apt-get install -y arachne-pnr arachne-pnr-chipdb build-essential fpga-icestorm fpga-icestorm-chipdb libftdi-dev libboost-all-dev libeigen3-dev tcl-dev libreadline-dev bison flex
+      run: sudo apt-get update && sudo apt-get install -y arachne-pnr arachne-pnr-chipdb build-essential fpga-icestorm fpga-icestorm-chipdb libftdi-dev libboost-all-dev libeigen3-dev tcl-dev libreadline-dev bison flex gperf
 
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
@@ -66,9 +66,7 @@ jobs:
       run: |
         git clone git://github.com/steveicarus/iverilog.git iverilog
         cd iverilog
-        aclocal
-        autoconf
-        automake
+        sh autoconf.sh
         ./configure
         make -j$(nproc)
         sudo make install
