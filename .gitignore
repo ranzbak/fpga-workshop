@@ -10,3 +10,5 @@
 **/*.rpt
 .idea
 **/*.bak
+**/*.json
+**/*.dblite
