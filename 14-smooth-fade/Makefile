@@ -2,18 +2,21 @@ PROJ = chip
 SIMPROJ = simulate
 
 PIN_DEF = upduino_v2.pcf
-DEVICE = 5k
+DEVICE = up5k
 TIME_DEVICE = up5k
+PACKAGE = sg48
 
 PROJ_SOURCE = $(shell ls -1 *.v | egrep -v '($(SIMPROJ)|$(PROJ))' )
 
 all: $(PROJ).rpt $(PROJ).bin
 
-%.blif: %.v $(SIMPROJ).v $(PROJ_SOURCE)
-	yosys -p 'read_verilog -noautowire $^; tribuf; hierarchy; opt; proc; opt; fsm; opt; clean; synth_ice40 -top chip -blif $@; tribuf -logic'
+%.json: %.v $(SIMPROJ).v $(PROJ_SOURCE)
+	# yosys -p 'read_verilog -noautowire $^; tribuf; hierarchy; opt; proc; opt; fsm; opt; clean; synth_ice40 -top chip -json $@; tribuf -logic'
+	yosys chip.ys
 
-%.asc: $(PIN_DEF) %.blif
-	arachne-pnr -d $(subst hx,,$(subst lp,,$(DEVICE))) -o $@ -p $^
+%.asc: %.json $(PIN_DEF) 
+	# arachne-pnr -d $(subst hx,,$(subst lp,,$(DEVICE))) -o $@ -p $^
+	nextpnr-ice40 --opt-timing --$(DEVICE) --package $(PACKAGE) --pcf $(word 2,$^) --json $< --asc $@
 
 %.bin: %.asc
 	icepack $< $@

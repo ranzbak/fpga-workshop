@@ -25,12 +25,9 @@ module blink(input clk, input rst, output led_r, output led_g, output led_b);
   // always at clock pulse
   always @(posedge clk)
   begin
-    if(rst)
-    begin
+    if(rst) begin
       count <= 0;
-    end
-    else
-    begin
+    end else begin
       count <= count + 1;
     end
   end

@@ -7,15 +7,15 @@
 all: chip.bin
 
 # Use Yosys to create an object file
-chip.blif: chip.v
-	yosys -q -p "read_verilog -noautowire $^ ; check ; clean ; synth_ice40 -blif $@"
+chip.json: chip.v
+	yosys -q -p "read_verilog -noautowire $^ ; check ; clean ; synth_ice40 -json $@"
 
 # Use the object file + the constraint file to create bit field file
-chip.txt: chip.blif upduino_v2.pcf
-	arachne-pnr -d 5k -P sg48 -p $(word 2,$^) $< -o $@
+chip.asc: chip.json upduino_v2.pcf
+	nextpnr-ice40 --opt-timing --up5k --package sg48 --pcf $(word 2,$^) --json $< --asc $@
 
 # Pack the bit field file in a format that can be programmed into the FPGA
-chip.bin: chip.txt
+chip.bin: chip.asc
 	icepack $< $@
 
 .PHONY: flash
