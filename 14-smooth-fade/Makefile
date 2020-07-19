@@ -53,6 +53,7 @@ clean:
 	$(RM) $(PROJ).blif $(PROJ).asc $(PROJ).rpt $(PROJ).bin
 	# Removing the simulation files
 	$(RM) $(SIMPROJ)_syntb $(SIMPROJ)_syntb.vcd $(SIMPROJ)_tb.vcd $(SIMPROJ)_tb $(SIMPROJ)_syn.v
+	$(RM) *.json
 
 .SECONDARY:
 .PHONY: all flash clean sim

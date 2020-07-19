@@ -1,0 +1,11 @@
+read_verilog -noautowire chip.v simulate.v cycle.v
+tribuf
+hierarchy
+opt
+proc
+opt
+fsm
+opt
+clean
+synth_ice40 -top chip -json chip.json
+tribuf -logic
