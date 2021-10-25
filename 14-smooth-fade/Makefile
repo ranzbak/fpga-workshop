@@ -2,9 +2,15 @@ PROJ = chip
 SIMPROJ = simulate
 
 PIN_DEF = upduino_v2.pcf
+
+# Model and FPGA package
 DEVICE = up5k
 TIME_DEVICE = up5k
 PACKAGE = sg48
+
+# Minimal frequency that the design has to meet timing for
+# e.g. the frequency the FPGA is running on in this design
+MIN_FREQ = 24
 
 PROJ_SOURCE = $(shell ls -1 *.v | egrep -v '($(SIMPROJ)|$(PROJ))' )
 
@@ -16,7 +22,7 @@ all: $(PROJ).rpt $(PROJ).bin
 
 %.asc: %.json $(PIN_DEF) 
 	# arachne-pnr -d $(subst hx,,$(subst lp,,$(DEVICE))) -o $@ -p $^
-	nextpnr-ice40 --opt-timing --$(DEVICE) --package $(PACKAGE) --pcf $(word 2,$^) --json $< --asc $@
+	nextpnr-ice40 --opt-timing --$(DEVICE) --package $(PACKAGE) --freq $(MIN_FREQ) --pcf $(word 2,$^) --json $< --asc $@
 
 %.bin: %.asc
 	icepack $< $@

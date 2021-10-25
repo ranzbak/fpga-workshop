@@ -15,12 +15,12 @@
 
 module blink(input clk, input rst, output led_r, output led_g, output led_b);
 
-  reg signed [25:0] count;
+  reg [24:0] count='b0;
   
   // Permanent assignments
-  assign led_r = count[25];
-  assign led_g = count[24];
-  assign led_b = count[23];
+  assign led_r = count[24];
+  assign led_g = count[23];
+  assign led_b = count[22];
 
   // always at clock pulse
   always @(posedge clk)

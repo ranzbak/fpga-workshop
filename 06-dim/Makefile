@@ -5,21 +5,20 @@ SIMPROJ = blink
 all: chip.bin
 
 # Use Yosys to create an object file
-chip.blif: chip.v blink.v
-	yosys -q -p "read_verilog -noautowire $^ ; hierarchy ; proc ; check ; fsm; opt -fast ; clean ; synth_ice40 -blif $@"
+chip.json: chip.v blink.v
+	yosys -q -p "read_verilog -noautowire $^ ; hierarchy ; proc ; check ; fsm; opt -fast ; clean ; synth_ice40 -json $@"
 
 # Use the object file + the constraint file to create bit field file
-%.txt: %.blif upduino_v2.pcf
-	arachne-pnr -d 5k -P sg48 -p $(word 2,$^) $< -o $@
-	if ! icetime -d up5k $@ -p $(word 2,$^) ; then $(RM)$@ ; fi
+%.asc: %.json upduino_v2.pcf
+	nextpnr-ice40 --opt-timing --up5k --package sg48 --pcf $(word 2,$^) --json $< --asc $@
 
 # Pack the bit field file in a format that can be programmed into the FPGA
-%.bin: %.txt
+%.bin: %.asc
 	icepack $< $@
 
 # Show the logical schema of the contained in the object file
 # This is the input for ArachnaPNR
-show: chip.blif
+show: chip.json
 	#yosys -q -p "hierarchy ; proc ; clean ; opt; synth_ice40; show -format ps -viewer xdg-open" $^
 	yosys -q -p "show -format ps -viewer xdg-open" $^
 
@@ -55,7 +54,7 @@ gtkwave: $(SIMPROJ)_tb.vcd default.gtkw
 	gtkwave $^
 
 clean:
-	$(RM) chip.blif chip.txt chip.ex chip.bin
+	$(RM) chip.json chip.asc chip.ex chip.bin
 	$(RM) $(SIMPROJ).blif
 	$(RM) $(SIMPROJ)_syntb $(SIMPROJ)_syntb.vcd $(SIMPROJ)_tb.vcd $(SIMPROJ)_tb
 

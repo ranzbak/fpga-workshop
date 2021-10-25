@@ -24,7 +24,7 @@ flash: chip.bin
 
 .PHONY: clean
 clean:
-	$(RM) -f chip.blif chip.txt chip.ex chip.bin
+	$(RM) -f chip.blif chip.asc chip.ex chip.bin chip.json
 
 .PHONY: show
 show: chip.blif

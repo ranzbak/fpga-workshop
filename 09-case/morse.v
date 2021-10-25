@@ -28,8 +28,8 @@ module morse (
   reg        r_led_b = 0;
 
   task t_morse;
-    input [23:0] i_count_on;
-    input [23:0] i_count_off;
+    input [24:0] i_count_on;
+    input [24:0] i_count_off;
     output o_led_morse;
 
     begin
@@ -38,7 +38,7 @@ module morse (
       else if(r_count < (i_count_on + i_count_off))
         o_led_morse = 1'b1; // !Important blocking assignment
       else
-        r_count <= 26'h0;
+        r_count <= 'h0;
     end
 
   endtask
@@ -51,7 +51,7 @@ module morse (
       // On time, Off time 
       // On = h493e00 +- 100ms
       // Off =  h493e00 +- 100ms
-      t_morse(24'h493e00, 24'h500000, o_led_morse);
+      t_morse(23'h249f00, 23'h280000, o_led_morse);
     end
   endtask
 
@@ -63,19 +63,22 @@ module morse (
       // On time, Off time 
       // On = h493e00 +- 100ms
       // Off =  h493e00 +- 100ms
-      t_morse(24'hdbba00, 24'h493e00, o_led_morse);
+      t_morse(23'h6ddd00, 23'h249f00, o_led_morse);
     end
   endtask
 
   // This Task is called to show a rest
+  reg [26:0] r_long_rest = 'h0;
   task t_morse_rest;
-    reg r_bogus;
-
+    output o_led_morse;
     begin
-      // On time, Off time 
-      // On = h000000 Not on
-      // Off = hffffff +- 0.35 seconds 
-      t_morse(24'h000000, 24'hffffff, r_bogus);
+      r_count <= 'b1;
+      r_long_rest <= r_long_rest + 1;
+      o_led_morse = 1'b1;
+      if (r_long_rest[25] == 1'b1) begin
+        r_count <= 'b0;
+        r_long_rest <= 'b0;
+      end
     end
   endtask
 
@@ -109,32 +112,32 @@ module morse (
     case(r_morse_state)
       start : begin
         t_morse_rest(r_led_r);
-        if(r_count == 26'h0)
+        if(r_count == 0)
           r_morse_state <= s_0_0;
       end
       s_0_0 : begin
         t_morse_did(r_led_r);
-        if(r_count == 26'h0)
+        if(r_count == 0)
           r_morse_state <= s_0_1;
       end
       s_0_1 : begin
         t_morse_did(r_led_r);
-        if(r_count == 26'h0)
+        if(r_count == 0)
           r_morse_state <= s_0_2;
       end
       s_0_2 : begin
         t_morse_did(r_led_r);
-        if(r_count == 26'h0)
+        if(r_count == 0)
           r_morse_state <= o_1_0;
       end
       o_1_0 : begin
         t_morse_dash(r_led_r);
-        if(r_count == 26'h0)
+        if(r_count == 0)
           r_morse_state <= o_1_1;
       end
       o_1_1 : begin
         t_morse_dash(r_led_r);
-        if(r_count == 26'h0)
+        if(r_count == 0)
           r_morse_state <= o_1_2;
       end
       o_1_2 : begin
@@ -158,8 +161,8 @@ module morse (
           r_morse_state <= rest;
       end
       rest : begin
-        t_morse_rest(r_led_r);
-        if(r_count == 0)
+        // t_morse_rest(r_led_r);
+        // if(r_count == 0)
           r_morse_state <= start;
       end
       default : 

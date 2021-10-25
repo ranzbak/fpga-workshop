@@ -2,28 +2,26 @@
 SIMPROJ = blink
 
 # Design Clock in (MHz)
-FPGA_CLOCK=50
+CLOCK_CTX=./ctx.py
 
 .PHONY: all
 all: chip.bin
 
 # Use Yosys to create an object file
-chip.blif: chip.v blink.v
-	yosys -q -p "read_verilog -noautowire $^ ; hierarchy ; proc ; check ; fsm; opt ; clean ; synth_ice40 -blif $@"
+chip.json: chip.v blink.v pll.v
+	yosys -q -p "read_verilog -noautowire $^ ; hierarchy ; proc ; opt ; check ; fsm; opt ; clean ; opt ; synth_ice40 -json $@"
 
 # Use the object file + the constraint file to create bit field file
-%.txt: %.blif upduino_v2.pcf
-	arachne-pnr -d 5k -P sg48 -p $(word 2,$^) $< -o $@
-	if ! icetime -d up5k $@ -p $(word 2,$^) -c $(FPGA_CLOCK) ; then $(RM)$@ ; fi
+%.asc: %.json upduino_v3.pcf
+	nextpnr-ice40 --pre-pack=${CLOCK_CTX} --opt-timing --up5k --package sg48 --pcf $(word 2,$^) --json $< --asc $@
 
 # Pack the bit field file in a format that can be programmed into the FPGA
-%.bin: %.txt
+%.bin: %.asc
 	icepack $< $@
 
 # Show the logical schema of the contained in the object file
 # This is the input for ArachnaPNR
-show: chip.blif
-	#yosys -q -p "hierarchy ; proc ; clean ; opt; synth_ice40; show -format ps -viewer xdg-open" $^
+show: chip.json
 	yosys -q -p "show -format ps -viewer xdg-open" $^
 
 # Check in the design can reach
@@ -58,7 +56,7 @@ gtkwave: $(SIMPROJ)_tb.vcd default.gtkw
 	gtkwave $^
 
 clean:
-	$(RM) chip.blif chip.txt chip.ex chip.bin
+	$(RM) chip.blif chip.ex chip.bin chip.asc chip.json
 	$(RM) $(SIMPROJ).blif
 	$(RM) $(SIMPROJ)_syntb $(SIMPROJ)_syntb.vcd $(SIMPROJ)_tb.vcd $(SIMPROJ)_tb
 

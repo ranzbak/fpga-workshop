@@ -15,12 +15,12 @@
 
 module blink(input i_clk, input i_rst, output o_led_r, output o_led_g, output o_led_b);
   // Count bits
-  parameter p_bit_r=25;
-  parameter p_bit_g=24;
-  parameter p_bit_b=23;
+  parameter p_bit_r=23;
+  parameter p_bit_g=22;
+  parameter p_bit_b=21;
 
   // Counter register
-  reg [25:0] r_count;
+  reg [23:0] r_count;
   
   // Permanent assignments
   assign o_led_r = r_count[p_bit_r];
