@@ -1,8 +1,8 @@
 
 module chip (
-  output  O_LED_R,
-  output  O_LED_G,
-  output  O_LED_B
+  output  LED_R,
+  output  LED_G,
+  output  LED_B
   );
 
   wire w_clk;
@@ -15,10 +15,10 @@ module chip (
 
   blink my_blink (
     .i_clk(w_clk),
-    .i_rst(0),
-    .o_led_r(O_LED_R),
-    .o_led_g(O_LED_G),
-    .o_led_b(O_LED_B)
+    .i_rst(1'b0),
+    .o_led_r(LED_R),
+    .o_led_g(LED_G),
+    .o_led_b(LED_B)
   );
 
 endmodule

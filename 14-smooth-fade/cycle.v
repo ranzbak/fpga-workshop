@@ -37,12 +37,12 @@ module cycle (
 
       // Duty cycle counter
       r_count_cur <= r_count_cur + 1;
-      if (r_count_cur == 255) 
+      if (r_count_cur == 8'hff) 
         r_count_cur <= 0;
 
       // PWM the led_g
       r_led <= 1'b1;
-      if(r_count_cur > r_count_duty)
+      if((r_count_cur) > r_count_duty)
         r_led <= 1'b0;
 
       // Move duty cycle counter

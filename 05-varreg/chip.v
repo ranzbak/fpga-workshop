@@ -15,7 +15,7 @@ module chip (
 
   led my_led (
     .i_clk(w_clk),
-    .i_rst(0),
+    .i_rst(1'b0),
     .o_led_r(w_led_r),
     .o_led_g(w_led_g),
     .o_led_b(w_led_b)

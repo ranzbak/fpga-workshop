@@ -16,7 +16,7 @@ module chip (
 
   blink my_blink (
     .clk(clk),
-    .rst(0),
+    .rst(1'b0),
         .led_r(led_r),
         .led_g(led_g),
         .led_b(led_b)

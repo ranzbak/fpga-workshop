@@ -1,0 +1,38 @@
+[*]
+[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
+[*] Tue Oct 26 20:10:36 2021
+[*]
+[dumpfile] "/home/paul/work/fpga/Lattice/icestorm/fpga_workshop/05-varreg/led_tb.vcd"
+[dumpfile_mtime] "Tue Oct 26 20:08:45 2021"
+[dumpfile_size] 3783
+[savefile] "/home/paul/work/fpga/Lattice/icestorm/fpga_workshop/05-varreg/led_tb.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] -1 -1
+*-21.000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] led_tb.
+[sst_width] 212
+[signals_width] 158
+[sst_expanded] 1
+[sst_vpaned_height] 149
+@28
+led_tb.uut.i_clk
+@200
+-
+@28
+[color] 1
+led_tb.uut.o_led_r
+[color] 4
+led_tb.uut.o_led_g
+@29
+[color] 5
+led_tb.uut.o_led_b
+@200
+-
+@28
+led_tb.uut.r_dest_led_g_var
+led_tb.uut.r_dest_led_r_reg
+led_tb.uut.r_led_g_var
+led_tb.uut.r_led_r_reg
+[pattern_trace] 1
+[pattern_trace] 0

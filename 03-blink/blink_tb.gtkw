@@ -1,0 +1,29 @@
+[*]
+[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
+[*] Tue Oct 26 19:36:41 2021
+[*]
+[dumpfile] "/home/paul/work/fpga/Lattice/icestorm/fpga_workshop/03-blink/blink_tb.vcd"
+[dumpfile_mtime] "Tue Oct 26 19:34:57 2021"
+[dumpfile_size] 10482782
+[savefile] "/home/paul/work/fpga/Lattice/icestorm/fpga_workshop/03-blink/blink_tb.gtkw"
+[timestart] 79992203000
+[size] 1920 1030
+[pos] -451 -220
+*-20.000000 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] blink_tb.
+[sst_width] 212
+[signals_width] 178
+[sst_expanded] 1
+[sst_vpaned_height] 299
+@28
+[color] 1
+blink_tb.uut.led_r
+blink_tb.uut.led_g
+[color] 5
+blink_tb.uut.led_b
+@200
+-
+@22
+blink_tb.uut.count[24:0]
+[pattern_trace] 1
+[pattern_trace] 0

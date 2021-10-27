@@ -1,7 +1,8 @@
-// Set the timescale Timescale/Time Precision
-`timescale 10 ns / 1 ns
+`default_nettype none
+`define DUMPSTR(x) `"x.vcd`"
+`timescale 100 ns / 10 ns
 
-module testbench;
+module blink_tb;
   reg r_clk;
   reg r_rst;
   always #2 r_clk = (r_clk === 1'b0);
@@ -34,11 +35,6 @@ module testbench;
 
   initial begin
     $timeformat(3, 2, " ns", 20);
-
-    if ($value$plusargs("vcd=%s", vcdfile)) begin
-      $dumpfile(vcdfile);
-      $dumpvars(0, testbench);
-    end
   end
 
   initial begin
@@ -51,6 +47,9 @@ module testbench;
 
 
   initial begin
+    $dumpfile(`DUMPSTR(`VCD_OUTPUT));
+    $dumpvars(0, blink_tb);
+  
     repeat (200000) @(posedge r_clk);
     $display("SUCCESS: Simulation run for 200000 cycles/ %0t.", $time);
     $finish;

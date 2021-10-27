@@ -1,4 +1,8 @@
-module testbench;
+`default_nettype none
+`define DUMPSTR(x) `"x.vcd`"
+`timescale 100 ns / 10 ns
+
+module blink_tb;
   reg clk;
   reg rst;
   always #2 clk = (clk === 1'b0);
@@ -27,11 +31,6 @@ module testbench;
 
   initial begin
     $timeformat(3, 2, " ns", 20);
-
-    if ($value$plusargs("vcd=%s", vcdfile)) begin
-      $dumpfile(vcdfile);
-      $dumpvars(0, testbench);
-    end
   end
 
   initial begin
@@ -44,6 +43,9 @@ module testbench;
 
 
   initial begin
+    $dumpfile(`DUMPSTR(`VCD_OUTPUT));
+    $dumpvars(0, blink_tb);
+
     repeat (200000) @(posedge clk);
     $display("SUCCESS: Simulation run for 200000 cycles/ %0t.", $time);
     $finish;

@@ -1,4 +1,8 @@
-module testbench;
+`default_nettype none
+`define DUMPSTR(x) `"x.vcd`"
+`timescale 100 ns / 10 ns
+
+module led_tb;
   reg r_clk;
   reg r_rst;
   always #2 r_clk = (r_clk === 1'b0);
@@ -17,8 +21,6 @@ module testbench;
     .o_led_b(w_led_b)
     );
 
-  reg [4095:0] vcdfile;
-
   initial begin
     r_rst = 1'b1;
     // Clear reset after 20 time units
@@ -27,15 +29,13 @@ module testbench;
 
   initial begin
     $timeformat(3, 2, " ns", 20);
-
-    if ($value$plusargs("vcd=%s", vcdfile)) begin
-      $dumpfile(vcdfile);
-      $dumpvars(0, testbench);
-    end
   end
 
 
-  initial begin
+  initial begin    
+    $dumpfile(`DUMPSTR(`VCD_OUTPUT));
+    $dumpvars(0, led_tb);
+
     repeat (100) @(posedge r_clk);
     $display("SUCCESS: Simulation run for 100 cycles/ %0t.", $time);
     $finish;

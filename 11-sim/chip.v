@@ -1,12 +1,14 @@
 
 module chip (
-  output  O_LED_R,
-  output  O_LED_G,
-  output  O_LED_B,
+  input EXT_CLK,
+
+  output  LED_R,
+  output  LED_G,
+  output  LED_B,
   input   I_INPUT_1
   );
 
-  wire w_clk;
+  wire clk;
   reg r_rst;
 
   // Cycle speeds of the RGB colors (All primes)
@@ -15,39 +17,39 @@ module chip (
     p_speed_g = 1607,
     p_speed_b = 1999;
 
-  // Clock devided to 24 MHz
-  SB_HFOSC #(
-    .CLKHF_DIV("0b01") // Half the clock speed
-    ) u_hfosc (
-      .CLKHFPU(1'b1),
-      .CLKHFEN(1'b1),
-      .CLKHF(w_clk)
-    );
+  // Clock IP
+  // Takes the 12MHz oscillator, and converts it to 24MHz
+  pll my_pll (
+      .i_clk(EXT_CLK),
+      .o_clk(clk)
+  );
 
   // RED
   cycle red_cycle (
-    .i_clk(w_clk),
+    .i_clk(clk),
     .i_rst(r_rst),
-    .i_speed(p_speed_r),
-    .o_led(O_LED_R)
+    .i_speed(p_speed_r[10:0]),
+    .o_led(LED_R)
   );
 
   // GREEN
   cycle green_cycle (
-    .i_clk(w_clk),
+    .i_clk(clk),
     .i_rst(r_rst),
-    .i_speed(p_speed_g),
-    .o_led(O_LED_G)
+    .i_speed(p_speed_g[10:0]),
+    .o_led(LED_G)
   );
 
   // BLUE
   cycle blue_cycle (
-    .i_clk(w_clk),
+    .i_clk(clk),
     .i_rst(r_rst),
-    .i_speed(p_speed_b),
-    .o_led(O_LED_B)
+    .i_speed(p_speed_b[10:0]),
+    .o_led(LED_B)
   );
 
-  assign r_rst = I_INPUT_1;
+  always @(posedge clk) begin
+    r_rst <= I_INPUT_1;
+  end
 
 endmodule

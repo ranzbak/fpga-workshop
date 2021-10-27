@@ -1,4 +1,4 @@
-read_verilog -noautowire chip.v simulate.v cycle.v
+read_verilog -noautowire chip.v simulate.v cycle.v pll.v
 tribuf
 hierarchy
 opt

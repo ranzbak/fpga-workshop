@@ -1,0 +1,35 @@
+[*]
+[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
+[*] Tue Oct 26 15:32:02 2021
+[*]
+[dumpfile] "/home/paul/work/fpga/Lattice/icestorm/fpga_workshop/14-smooth-fade/simulate_tb.vcd"
+[dumpfile_mtime] "Tue Oct 26 15:27:43 2021"
+[dumpfile_size] 21804434
+[savefile] "/home/paul/work/fpga/Lattice/icestorm/fpga_workshop/14-smooth-fade/simulate_tb.gtkw"
+[timestart] 0
+[size] 1920 1030
+[pos] -451 -220
+*-35.434944 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] simulate_tb.
+[treeopen] simulate_tb.uut.
+[sst_width] 212
+[signals_width] 206
+[sst_expanded] 1
+[sst_vpaned_height] 299
+@28
+[color] 7
+simulate_tb.uut.o_led
+@29
+simulate_tb.uut.simulate_cycle.r_led
+@22
+simulate_tb.uut.i_speed[10:0]
+@8022
+simulate_tb.uut.simulate_cycle.r_count_duty[7:0]
+simulate_tb.uut.simulate_cycle.r_count_duty_next[7:0]
+@28
+simulate_tb.uut.simulate_cycle.r_duty_dir
+@8022
+[color] 2
+simulate_tb.uut.simulate_cycle.r_rst_counter[7:0]
+[pattern_trace] 1
+[pattern_trace] 0
