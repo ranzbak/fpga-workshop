@@ -1,8 +1,9 @@
 module chip (
+  input   EXT_CLK,
   input   I_RESET_WIRE,
-  output  O_LED_R,
-  output  O_LED_G,
-  output  O_LED_B,
+  output  LED_R,
+  output  LED_G,
+  output  LED_B,
   inout   IO_ONE_WIRE
   );
 
@@ -63,9 +64,9 @@ module chip (
   );
 
   // Connect up the registers to the LED wires
-  assign O_LED_R = w_led_r;
-  assign O_LED_G = w_led_g;
-  assign O_LED_B = w_led_b;
+  assign LED_R = w_led_r;
+  assign LED_G = w_led_g;
+  assign LED_B = w_led_b;
 
 
 endmodule

@@ -13,9 +13,9 @@ module chip (
 
   // Cycle speeds of the RGB colors (All primes)
   parameter
-    p_speed_r = 1301,
-    p_speed_g = 1607,
-    p_speed_b = 1999;
+    p_speed_r = 20'hff,
+    p_speed_g = 20'hff,
+    p_speed_b = 20'hff;
 
   // Clock to 24 MHz
   pll mypll (
@@ -26,8 +26,8 @@ module chip (
   // RGB IP
   SB_RGBA_DRV #(
     .CURRENT_MODE("0b1"),
-    .RGB0_CURRENT("0b000111"),
-    .RGB1_CURRENT("0b000011"),
+    .RGB0_CURRENT("0b111111"),
+    .RGB1_CURRENT("0b111111"),
     .RGB2_CURRENT("0b111111")
   ) u_rgb_drv (
     .RGB0(LED_R),
@@ -41,28 +41,33 @@ module chip (
   );
 
   // RED
-	cycle red_cycle (
+	cycle #(
+    .START_POS(0)
+  ) red_cycle (
 		.i_clk(w_clk),
 		.i_rst(r_rst),
-    .i_speed(p_speed_r[10:0]),
+    .i_speed(p_speed_r),
     .o_led(w_led_r)
 	);
 
   // GREEN
-	cycle green_cycle (
+	cycle #(
+    .START_POS(512)
+  ) green_cycle (
 		.i_clk(w_clk),
 		.i_rst(r_rst),
-    .i_speed(p_speed_g[10:0]),
+    .i_speed(p_speed_g),
     .o_led(w_led_g)
 	);
 
   // BLUE
-	cycle blue_cycle (
+	cycle #(
+    .START_POS(1024)
+  ) blue_cycle (
 		.i_clk(w_clk),
 		.i_rst(r_rst),
-    .i_speed(p_speed_b[10:0]),
+    .i_speed(p_speed_b),
     .o_led(w_led_b)
 	);
-
 
 endmodule

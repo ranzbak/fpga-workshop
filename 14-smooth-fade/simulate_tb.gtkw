@@ -1,35 +1,52 @@
 [*]
 [*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
-[*] Tue Oct 26 15:32:02 2021
+[*] Thu Oct 28 20:55:37 2021
 [*]
 [dumpfile] "/home/paul/work/fpga/Lattice/icestorm/fpga_workshop/14-smooth-fade/simulate_tb.vcd"
-[dumpfile_mtime] "Tue Oct 26 15:27:43 2021"
-[dumpfile_size] 21804434
+[dumpfile_mtime] "Thu Oct 28 20:54:23 2021"
+[dumpfile_size] 45129760
 [savefile] "/home/paul/work/fpga/Lattice/icestorm/fpga_workshop/14-smooth-fade/simulate_tb.gtkw"
-[timestart] 0
+[timestart] 86210000000
 [size] 1920 1030
-[pos] -451 -220
-*-35.434944 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] -1 -1
+*-31.434944 17153000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] simulate_tb.
 [treeopen] simulate_tb.uut.
+[treeopen] simulate_tb.uut2.
+[treeopen] simulate_tb.uut3.
 [sst_width] 212
 [signals_width] 206
 [sst_expanded] 1
 [sst_vpaned_height] 299
-@28
-[color] 7
-simulate_tb.uut.o_led
-@29
-simulate_tb.uut.simulate_cycle.r_led
-@22
-simulate_tb.uut.i_speed[10:0]
 @8022
-simulate_tb.uut.simulate_cycle.r_count_duty[7:0]
-simulate_tb.uut.simulate_cycle.r_count_duty_next[7:0]
-@28
-simulate_tb.uut.simulate_cycle.r_duty_dir
+[color] 1
+simulate_tb.uut.simulate_cycle.r_count_cur[11:0]
+@20000
+-
 @8022
-[color] 2
-simulate_tb.uut.simulate_cycle.r_rst_counter[7:0]
+simulate_tb.uut2.simulate_cycle.r_count_cur[11:0]
+@20000
+-
+@8022
+[color] 5
+simulate_tb.uut3.simulate_cycle.r_count_cur[11:0]
+@20000
+-
+@201
+-
+@8022
+[color] 1
+simulate_tb.uut.simulate_cycle.r_count_out[7:0]
+@20000
+-
+@8022
+simulate_tb.uut2.simulate_cycle.r_count_out[7:0]
+@20000
+-
+@8022
+[color] 5
+simulate_tb.uut3.simulate_cycle.r_count_out[7:0]
+@20000
+-
 [pattern_trace] 1
 [pattern_trace] 0

@@ -6,27 +6,37 @@ module simulate_tb;
   reg r_clk;
   always #5 r_clk = (r_clk === 1'b0);
 
-  wire w_ok;
+  wire [2:0] w_ok;
 
-  simulate uut (
+  simulate #(
+    .START_POS(0)
+  ) uut (
     .i_clk(r_clk),
-    .i_speed(11'd2),
-    .o_led(w_ok)
+    .i_speed(16'd200),
+    .o_led(w_ok[0])
   );
 
-  reg [4095:0] vcdfile;
+  simulate #(
+    .START_POS(512)
+  ) uut2 (
+    .i_clk(r_clk),
+    .i_speed(16'd200),
+    .o_led(w_ok[1])
+  );
+
+  simulate #(
+    .START_POS(1024)
+  ) uut3 (
+    .i_clk(r_clk),
+    .i_speed(16'd200),
+    .o_led(w_ok[2])
+  );
+
+
 
   initial begin
     $timeformat(3, 2, " ns", 20);
   end
-
-  always @(posedge r_clk) begin
-    if( uut.simulate_cycle.r_count_cur > 1023 ) begin
-      $display("%0t: %d", $time, uut.simulate_cycle.r_count_cur);
-      $stop;
-    end
-  end
-
 
   initial begin
     $dumpfile(`DUMPSTR(`VCD_OUTPUT));

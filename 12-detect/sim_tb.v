@@ -1,6 +1,6 @@
 // A simple circuit that can be used to detect brownouts and other hardware issues
 
-module sim_top (
+module sim_tb (
   input i_clk,
   input i_rst,
   output O_LED_R,
@@ -12,8 +12,7 @@ module sim_top (
 
   // temperature sensor
   temp #(
-    .CDR_N(4),
-    .CRD_O(0)
+    .CDR_N(4)
   ) my_temp (
     .i_clk(i_clk),
     .i_rst(i_rst),

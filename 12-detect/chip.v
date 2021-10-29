@@ -1,8 +1,8 @@
 module chip (
   input   I_RESET_WIRE,
-  output  O_LED_R,
-  output  O_LED_G,
-  output  O_LED_B,
+  output  LED_R,
+  output  LED_G,
+  output  LED_B,
   inout   IO_ONE_WIRE
   );
 
@@ -43,7 +43,7 @@ module chip (
     .o_led_g(led_g),
     .o_led_b(led_b),
     .i_owr(owr_in),
-    .i_owr(owr_out)
+    .o_owr(owr_out)
   );
 
   // Configure and connect the IO_ONE_WIRE pin
@@ -58,9 +58,9 @@ module chip (
   );
 
   // Connect up the registers to the LED wires
-  assign O_LED_R = led_r;
-  assign O_LED_G = led_g;
-  assign O_LED_B = led_b;
+  assign LED_R = led_r;
+  assign LED_G = led_g;
+  assign LED_B = led_b;
 
 
 endmodule

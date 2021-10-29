@@ -1,0 +1,28 @@
+[*]
+[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
+[*] Thu Oct 28 19:03:23 2021
+[*]
+[dumpfile] "/home/paul/work/fpga/Lattice/icestorm/fpga_workshop/13-temp-ds18b20/sim_tb.vcd"
+[dumpfile_mtime] "Thu Oct 28 18:06:30 2021"
+[dumpfile_size] 6667309
+[savefile] "/home/paul/work/fpga/Lattice/icestorm/fpga_workshop/13-temp-ds18b20/sim_tb.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] -1 -1
+*-32.000000 978000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] simulate_tb.
+[treeopen] simulate_tb.uut.
+[sst_width] 212
+[signals_width] 142
+[sst_expanded] 1
+[sst_vpaned_height] 149
+@28
+[color] 1
+simulate_tb.uut.led_r
+simulate_tb.uut.led_g
+[color] 5
+simulate_tb.uut.led_b
+@23
+simulate_tb.uut.my_temp.r_command[5:0]
+[pattern_trace] 1
+[pattern_trace] 0

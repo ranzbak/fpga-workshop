@@ -1,0 +1,11 @@
+# External clock pin
+set_io -nowarn EXT_CLK  20
+set_io -nowarn I_RESET_WIRE 42
+
+# LED output pins
+set_io -nowarn LED_R	41
+set_io -nowarn LED_G	39
+set_io -nowarn LED_B	40
+
+# One wire inout pin
+set_io IO_ONE_WIRE 43

@@ -1,6 +1,6 @@
 // Testing the circuit with altered clock deviders
 
-module sim_top (
+module sim_tb (
   input clk,
   input rst,
   output O_LED_R,

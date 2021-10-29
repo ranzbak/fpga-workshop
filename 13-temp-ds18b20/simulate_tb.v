@@ -1,7 +1,9 @@
 // Set the timescale Timescale/Time Precision
+`default_nettype none
+`define DUMPSTR(x) `"x.vcd`"
 `timescale 100ns / 10ns
 
-module testbench;
+module simulate_tb;
   reg clk;
   always #5 clk = (clk === 1'b0);
 
@@ -11,7 +13,7 @@ module testbench;
 
 
   // Instantiate the test bench
-  sim_top uut (
+  sim_tb uut (
     .clk(clk),
     .rst(rst),
     .O_LED_R(led_r),
@@ -21,15 +23,8 @@ module testbench;
     .O_ONE_WIRE(o_one_wire)
   );
 
-  reg [4095:0] vcdfile;
-
   initial begin
     $timeformat(3, 2, " ns", 20);
-
-    if ($value$plusargs("vcd=%s", vcdfile)) begin
-      $dumpfile(vcdfile);
-      $dumpvars(0, testbench);
-    end
   end
 
   // Generate the reset
@@ -65,6 +60,9 @@ module testbench;
 
   // End the simulation in time
   initial begin
+    $dumpfile(`DUMPSTR(`VCD_OUTPUT));
+    $dumpvars(0, simulate_tb);
+
     repeat (200000) @(posedge clk);
     $display("SUCCESS: Simulation run for 200000 cycles/ %0t.", $time);
     $display("SUCCESS: Simulation run for 200000 cycles/ %0t.", $realtime);
